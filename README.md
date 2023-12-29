@@ -1,2 +1,2 @@
-# Retima-Web
-Retima messenger for web.
+# Tochly-Web
+Tochly messenger for web.
