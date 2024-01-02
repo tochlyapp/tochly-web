@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
+import Alert from "react-bootstrap/Alert";
 import Card from "react-bootstrap/Card";
 import CardBody from "react-bootstrap/CardBody";
 import Col from "react-bootstrap/Col";
@@ -16,24 +16,21 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import { Header, SocialButtons } from "@/app/auth/components";
+import { Header } from "@/app/auth/components";
 import { SpinningButton } from "@/app/components";
 
-import { useLoginMutation } from "@/redux/services/authAPI";
+import { useResetPasswordMutation } from "@/redux/services/authAPI";
 
 
 type FormInput = {
   email: string;
-  password: string;
 };
 
-const Login: React.FC = () => {
-  const router = useRouter();
-  const [login, { isLoading }] = useLoginMutation();
+const ForgotPassword: React.FC = () => {
+  const [resetPassword] = useResetPasswordMutation()
 
   const schema = yup.object().shape({
     email: yup.string().email("Enter correct email").required("required"),
-    password: yup.string().required("required").min(8).max(50),
   });
 
   const {
@@ -43,15 +40,15 @@ const Login: React.FC = () => {
   } = useForm<FormInput>({ resolver: yupResolver(schema) });
 
   const onSubmit = (data: FormInput): void => {
-    login({ email: data.email, password: data.password })
-      .unwrap()
-      .then(() => {
-        toast.success("Logged in successfully");
-        router.push("/");
-      })
-      .catch(() => {
-        toast.error("Login failed!");
-      });
+    resetPassword({ email: data.email })
+    .unwrap()
+    .then(() => {
+      toast.success("Request sent! Check your email for reset link")
+    })
+    .catch((error) => {
+      console.log('ERROR', error)
+      toast.error("Unable to send password reset link")
+    })
   };
 
   return (
@@ -60,11 +57,14 @@ const Login: React.FC = () => {
         <Row className="justify-content-center">
           <Col md={8} lg={6} xl={5}>
             <Header
-              title="Sign in"
-              description="Sign in to continue to Tochly."
+              title="Reset Password"
+              description="Reset Password With Tochly."
             />
             <Card>
               <CardBody className="p-4">
+                <Alert variant="info" className="text-center mb-4">
+                  Enter your Email and instructions will be sent to you
+                </Alert>
                 <Form noValidate onSubmit={handleSubmit(onSubmit)}>
                   <Form.Group as={Col} md="12" controlId="email">
                     <Form.Label>Email</Form.Label>
@@ -88,63 +88,26 @@ const Login: React.FC = () => {
                       )}
                     </InputGroup>
                   </Form.Group>
-
-                  <Form.Group as={Col} md="12" controlId="password">
-                    <div className="float-end">
-                      <Link
-                        href="/auth/password-reset"
-                        className="text-muted font-size-13"
-                      >
-                        Forgot password?
-                      </Link>
-                    </div>
-                    <Form.Label>Password</Form.Label>
-                    <InputGroup
-                      className="input-group bg-soft-light rounded-3 mb-3"
-                      hasValidation
-                    >
-                      <span className="input-group-text text-muted">
-                        <i className="ri-lock-2-line" />
-                      </span>
-                      <Form.Control
-                        {...register("password")}
-                        type="password"
-                        placeholder="Password"
-                        isInvalid={errors.password ? true : false}
-                      />
-                      {errors.password && (
-                        <Form.Control.Feedback type="invalid">
-                          {errors.password.message}
-                        </Form.Control.Feedback>
-                      )}
-                    </InputGroup>
-                  </Form.Group>
-
                   <div className="d-grid">
                     <SpinningButton
-                      name="Login"
-                      isLoading={isLoading}
+                      name="Reset"
+                      isLoading={false}
                       variant="primary"
-                      className="waves-effect waves-light"
+                      className=" waves-effect waves-light"
                       type="submit"
                     />
                   </div>
                 </Form>
               </CardBody>
             </Card>
-            
-            <div className="ms-1">
-              <SocialButtons type="Signin" />
-            </div>
-
             <div className="mt-5 text-center">
               <p>
-                {`Don't have an account ? `}
+                {`Remember It ? `}
                 <Link
-                  href="/auth/register"
+                  href="/auth/login"
                   className="font-weight-medium text-primary"
                 >
-                  Signup now
+                  Signin
                 </Link>
               </p>
               <p>© {new Date().getFullYear()} Tochly.</p>
@@ -156,4 +119,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default ForgotPassword;

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import Card from "react-bootstrap/Card";
@@ -16,24 +15,32 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import { Header, SocialButtons } from "@/app/auth/components";
+import { Header } from "@/app/auth/components";
 import { SpinningButton } from "@/app/components";
 
-import { useLoginMutation } from "@/redux/services/authAPI";
+import { useResetPasswordConfirmMutation } from "@/redux/services/authAPI";
 
 
-type FormInput = {
-  email: string;
-  password: string;
+type Props = {
+  params: {
+    uid: string;
+    token: string;
+  };
 };
 
-const Login: React.FC = () => {
+type FormInput = {
+  newPassword: string;
+  reNewPassword: string;
+};
+
+const PasswordReset: React.FC<Props> = ({ params }) => {
   const router = useRouter();
-  const [login, { isLoading }] = useLoginMutation();
+  const [resetPasswordConfirm, { isLoading }] =
+    useResetPasswordConfirmMutation();
 
   const schema = yup.object().shape({
-    email: yup.string().email("Enter correct email").required("required"),
-    password: yup.string().required("required").min(8).max(50),
+    newPassword: yup.string().required("required").min(8).max(50),
+    reNewPassword: yup.string().required("required").min(8).max(50),
   });
 
   const {
@@ -42,63 +49,39 @@ const Login: React.FC = () => {
     formState: { errors },
   } = useForm<FormInput>({ resolver: yupResolver(schema) });
 
-  const onSubmit = (data: FormInput): void => {
-    login({ email: data.email, password: data.password })
+  const onSubmit = (data: FormInput) => {
+    const { uid, token } = params;
+    resetPasswordConfirm({
+      uid,
+      token,
+      new_password: data.reNewPassword,
+      re_new_password: data.reNewPassword,
+    })
       .unwrap()
       .then(() => {
-        toast.success("Logged in successfully");
-        router.push("/");
+        toast.success("Password reset successfully!");
       })
       .catch(() => {
-        toast.error("Login failed!");
+        toast.error("Password resetting failed");
+      })
+      .finally(() => {
+        router.push("/auth/login");
       });
   };
-
   return (
     <div className="my-5 pt-sm-5">
       <Container>
         <Row className="justify-content-center">
           <Col md={8} lg={6} xl={5}>
             <Header
-              title="Sign in"
-              description="Sign in to continue to Tochly."
+              title="Password Reset"
+              description="Enter new password below"
             />
             <Card>
               <CardBody className="p-4">
                 <Form noValidate onSubmit={handleSubmit(onSubmit)}>
-                  <Form.Group as={Col} md="12" controlId="email">
-                    <Form.Label>Email</Form.Label>
-                    <InputGroup
-                      className="input-group bg-soft-light rounded-3 mb-3"
-                      hasValidation
-                    >
-                      <span className="input-group-text text-muted">
-                        <i className="ri-mail-line" />
-                      </span>
-                      <Form.Control
-                        {...register("email")}
-                        type="text"
-                        placeholder="Email"
-                        isInvalid={errors.email ? true : false}
-                      />
-                      {errors.email && (
-                        <Form.Control.Feedback type="invalid">
-                          {errors.email.message}
-                        </Form.Control.Feedback>
-                      )}
-                    </InputGroup>
-                  </Form.Group>
-
-                  <Form.Group as={Col} md="12" controlId="password">
-                    <div className="float-end">
-                      <Link
-                        href="/auth/password-reset"
-                        className="text-muted font-size-13"
-                      >
-                        Forgot password?
-                      </Link>
-                    </div>
-                    <Form.Label>Password</Form.Label>
+                  <Form.Group as={Col} md="12" controlId="newPassword">
+                    <Form.Label>New Password</Form.Label>
                     <InputGroup
                       className="input-group bg-soft-light rounded-3 mb-3"
                       hasValidation
@@ -107,48 +90,53 @@ const Login: React.FC = () => {
                         <i className="ri-lock-2-line" />
                       </span>
                       <Form.Control
-                        {...register("password")}
-                        type="password"
-                        placeholder="Password"
-                        isInvalid={errors.password ? true : false}
+                        {...register("newPassword")}
+                        type="text"
+                        placeholder="New Password"
+                        isInvalid={errors.newPassword ? true : false}
                       />
-                      {errors.password && (
+                      {errors.newPassword && (
                         <Form.Control.Feedback type="invalid">
-                          {errors.password.message}
+                          {errors.newPassword.message}
                         </Form.Control.Feedback>
                       )}
                     </InputGroup>
                   </Form.Group>
 
+                  <Form.Group as={Col} md="12" controlId="reNewPassword">
+                    <Form.Label>Confirm New Password</Form.Label>
+                    <InputGroup
+                      className="input-group bg-soft-light rounded-3 mb-3"
+                      hasValidation
+                    >
+                      <span className="input-group-text text-muted">
+                        <i className="ri-lock-2-line" />
+                      </span>
+                      <Form.Control
+                        {...register("reNewPassword")}
+                        type="text"
+                        placeholder="Confirm New Password"
+                        isInvalid={errors.newPassword ? true : false}
+                      />
+                      {errors.reNewPassword && (
+                        <Form.Control.Feedback type="invalid">
+                          {errors.reNewPassword.message}
+                        </Form.Control.Feedback>
+                      )}
+                    </InputGroup>
+                  </Form.Group>
                   <div className="d-grid">
                     <SpinningButton
-                      name="Login"
+                      name="Reset"
                       isLoading={isLoading}
                       variant="primary"
-                      className="waves-effect waves-light"
+                      className=" waves-effect waves-light"
                       type="submit"
                     />
                   </div>
                 </Form>
               </CardBody>
             </Card>
-            
-            <div className="ms-1">
-              <SocialButtons type="Signin" />
-            </div>
-
-            <div className="mt-5 text-center">
-              <p>
-                {`Don't have an account ? `}
-                <Link
-                  href="/auth/register"
-                  className="font-weight-medium text-primary"
-                >
-                  Signup now
-                </Link>
-              </p>
-              <p>© {new Date().getFullYear()} Tochly.</p>
-            </div>
           </Col>
         </Row>
       </Container>
@@ -156,4 +144,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default PasswordReset;
