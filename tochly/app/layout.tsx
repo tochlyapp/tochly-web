@@ -1,5 +1,6 @@
 import { ToastContainer } from "react-toastify";
 import CustomProvider from "@/redux/provider";
+
 import "react-toastify/dist/ReactToastify.css";
 import "@/styles/themes.scss";
 

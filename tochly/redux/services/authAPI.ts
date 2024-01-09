@@ -23,13 +23,6 @@ type SocialAuthArgs = {
   code: string;
 };
 
-type ResetPasswordConfirm = {
-  uid: string;
-  token: string;
-  new_password: string;
-  re_new_password: string;
-};
-
 const authAPI = baseAPI.injectEndpoints({
   endpoints: (builder) => ({
     getUser: builder.query<User, void>({
@@ -87,7 +80,7 @@ const authAPI = baseAPI.injectEndpoints({
         body: { email },
       }),
     }),
-    resetPasswordConfirm: builder.mutation<void, ResetPasswordConfirm>({
+    resetPasswordConfirm: builder.mutation({
       query: ({ uid, token, new_password, re_new_password }) => ({
         url: "/users/reset_password_confirm/",
         method: "POST",

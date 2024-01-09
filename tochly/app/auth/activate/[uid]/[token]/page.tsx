@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { useRouter } from "next/navigation";
 
@@ -25,21 +25,28 @@ type Props = {
 
 const Activation: React.FC<Props> = ({ params }) => {
   const router = useRouter();
+  const effactRan = useRef(false)
   const [activation] = useActivateMutation();
 
   useEffect(() => {
     const { uid, token } = params
-    activation({ uid, token })
-    .unwrap()
-    .then(() => {
-      toast.success("Account activated successfully!")
-    })
-    .catch(() => {
-      toast.error("Account activation failed")
-    })
-    .finally(() => {
-      router.push("/auth/login")
-    })
+    if (!effactRan.current) {
+      activation({ uid, token })
+      .unwrap()
+      .then(() => {
+        toast.success("Account activated successfully!")
+      })
+      .catch(() => {
+        toast.error("Account activation failed")
+      })
+      .finally(() => {
+        router.push("/auth/login")
+      })
+    }
+
+    return () => {
+      effactRan.current = true
+    }
   }, [])
   return (
     <div className="my-5 pt-sm-5">

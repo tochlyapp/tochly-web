@@ -1,10 +1,10 @@
 "use client";
 
-import Container from 'react-bootstrap/Container';
-import Spinner from 'react-bootstrap/Spinner';
+import Container from "react-bootstrap/Container";
+import Spinner from "react-bootstrap/Spinner";
 
 import { useSocialAuthenticateMutation } from "@/redux/services/authAPI";
-import { useSocialAuth } from "@/app/auth/hooks"; 
+import { useSocialAuth } from "@/app/auth/hooks";
 
 
 const Page = () => {
@@ -16,6 +16,6 @@ const Page = () => {
       <Spinner animation="border" />
     </Container>
   );
-}
+};
 
 export default Page;

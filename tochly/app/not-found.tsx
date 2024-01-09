@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
-import Header from "@/app/auth/components/Header";
+import { Header } from "@/app/auth/components";
 
 
 const NotFound: React.FC = () => {
