@@ -25,7 +25,7 @@ type SocialAuthArgs = {
 
 const authAPI = baseAPI.injectEndpoints({
   endpoints: (builder) => ({
-    getUser: builder.query<User, void>({
+    getCurrentUser: builder.query<User, void>({
       query: () => "/users/me/",
     }),
     socialAuthenticate: builder.mutation<CreateUserResponse, SocialAuthArgs>({
@@ -91,7 +91,7 @@ const authAPI = baseAPI.injectEndpoints({
 });
 
 export const {
-  useGetUserQuery,
+  useGetCurrentUserQuery,
   useSocialAuthenticateMutation,
   useLoginMutation,
   useSignUpMutation,
