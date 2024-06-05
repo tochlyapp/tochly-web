@@ -1,4 +1,4 @@
-import { baseAPI } from "@/redux/services/baseAPI";
+import { baseAPI } from '@/redux/services/baseAPI';
 
 
 const memberAPI = baseAPI.injectEndpoints({
@@ -6,11 +6,11 @@ const memberAPI = baseAPI.injectEndpoints({
     createTeamMember: builder.mutation({
       query: ({ user, teamId, permission, isActive }) => ({
         url: `/teams/${teamId}/members/`,
-        method: "POST",
+        method: 'POST',
         body: { user, permission, is_active: isActive },
       }),
       invalidatesTags: ['Teams']
-    })
+    }),
   }),
 });
 

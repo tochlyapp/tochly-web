@@ -1,8 +1,8 @@
-"use client";
-import { useEffect } from "react";
-import { useAppDispatch } from "@/redux/hooks";
-import { setAuth, finishLoading } from "@/redux/slices/authSlice";
-import { useVerifyMutation } from "@/redux/services/authAPI";
+'use client';
+import { useEffect } from 'react';
+import { useAppDispatch } from '@/redux/hooks';
+import { setAuth, finishLoading } from '@/redux/slices/authSlice';
+import { useVerifyMutation } from '@/redux/services/authAPI';
 
 const Authenticate: React.FC = () => {
   const dispatch = useAppDispatch();

@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
-import Col from "react-bootstrap/Col";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
 
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
 
-import { Header } from "@/app/auth/components";
+import { Header } from '@/app/auth/components';
 
-import { useActivateMutation } from "@/redux/services/authAPI";
+import { useActivateMutation } from '@/redux/services/authAPI';
 
 
 type Props = {
@@ -40,7 +40,7 @@ const Activation: React.FC<Props> = ({ params }) => {
         toast.error("Account activation failed")
       })
       .finally(() => {
-        router.push("/auth/login")
+        router.push('/auth/login')
       })
     }
 
@@ -49,9 +49,9 @@ const Activation: React.FC<Props> = ({ params }) => {
     }
   }, [])
   return (
-    <div className="my-5 pt-sm-5">
+    <div className='my-5 pt-sm-5'>
       <Container>
-        <Row className="justify-content-center">
+        <Row className='justify-content-center'>
           <Col md={8} lg={6} xl={5}>
             <Header
               title="Activating your account..."

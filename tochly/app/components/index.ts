@@ -1,1 +1,1 @@
-export { default as SpinningButton } from "@/app/components/SpinningButton";
+export { default as SpinningButton } from '@/app/components/SpinningButton';

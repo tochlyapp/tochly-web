@@ -1,7 +1,7 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 
-import authReducer from "@/redux/slices/authSlice";
-import { baseAPI } from "@/redux/services/baseAPI";
+import authReducer from '@/redux/slices/authSlice';
+import { baseAPI } from '@/redux/services/baseAPI';
 
 
 export const makestore = () =>
@@ -15,5 +15,5 @@ export const makestore = () =>
   });
 
 export type AppStore = ReturnType<typeof makestore>;
-export type Appstate = ReturnType<AppStore["getState"]>;
-export type AppDispatch = AppStore["dispatch"];
+export type Appstate = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch'];

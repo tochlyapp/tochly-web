@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 import { toast } from 'react-toastify';
@@ -8,24 +8,24 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Modal from 'react-bootstrap/Modal';
 import Navbar from 'react-bootstrap/Navbar';
 
-import { useAppSelector } from "@/redux/hooks";
+import { useAppSelector } from '@/redux/hooks';
 import { 
   useGetUserTeamsQuery, 
   useGetTeamByNameQuery,
   useCreateTeamMutation, 
   useDeleteTeamMutation,
-} from "@/redux/services/teamAPIs";
+} from '@/redux/services/teamAPIs';
 import { useCreateTeamMemberMutation } from '@/redux/services/memberAPI';
 import { useGetCurrentUserQuery } from '@/redux/services/authAPI';
 
-import { SpinningButton } from "@/app/components";
+import { SpinningButton } from '@/app/components';
 
 import { TEAM_PERMISION_OWNER } from '@/app/constants';
 
@@ -51,7 +51,7 @@ export default function Page() {
   const { data: currentUser } = useGetCurrentUserQuery();
 
   const schema = yup.object().shape({
-    name: yup.string().required("required").min(3).max(50),
+    name: yup.string().required('required').min(3).max(50),
     description: yup.string().max(500),
   });
 
@@ -102,21 +102,21 @@ export default function Page() {
   };
   
   return (
-    <main className="flex min-h-screen flex-col p-6">
-      <Navbar bg="primary" data-bs-theme="dark" expand="lg">
+    <main className='flex min-h-screen flex-col p-6'>
+      <Navbar bg='primary' data-bs-theme='dark' expand='lg'>
         <Container>
-          <Navbar.Brand href="#">
+          <Navbar.Brand href='#'>
             <big>
               <b>Tochly</b>
             </big>
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarScroll" />
-          <Navbar.Collapse className="justify-content-end" id="navbarScroll">
+          <Navbar.Toggle aria-controls='navbarScroll' />
+          <Navbar.Collapse className='justify-content-end' id='navbarScroll'>
             <Navbar.Text>
               {isAuthenticated ? (
-                <Button onClick={showModal} type="button">CREATE A NEW TEAM</Button>
+                <Button onClick={showModal} type='button'>CREATE A NEW TEAM</Button>
               ) : (
-                <Link href="/auth/login">Sign in</Link>
+                <Link href='/auth/login'>Sign in</Link>
               )}
             </Navbar.Text>
           </Navbar.Collapse>
@@ -136,7 +136,7 @@ export default function Page() {
       <Modal
         show={show}
         onHide={closeModal}
-        backdrop="static"
+        backdrop='static'
         keyboard={false}
         centered
       >
@@ -145,46 +145,46 @@ export default function Page() {
         </Modal.Header>
         <Modal.Body>
           <Form noValidate onSubmit={handleSubmit(onSubmit)}>
-            <Form.Group className="mb-3">
+            <Form.Group className='mb-3'>
               <Form.Label>Name</Form.Label>
               <Form.Control 
-                {...register("name")}
-                type="text" 
-                className="border-secondary" 
+                {...register('name')}
+                type='text'
+                className='border-secondary' 
                 isInvalid={errors.name ? true : false}
               />
               {errors.name && (
-                <Form.Control.Feedback type="invalid">
+                <Form.Control.Feedback type='invalid'>
                   {errors.name.message}
                 </Form.Control.Feedback>
               )}
             </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Group className='mb-3' controlId='description'>
               <Form.Label>Description</Form.Label>
               <Form.Control 
-                {...register("description")}
-                as="textarea" 
+                {...register('description')}
+                as='textarea' 
                 rows={3} 
-                className="border-secondary" 
+                className='border-secondary' 
                 isInvalid={errors.description ? true : false}
               />
               {errors.description && (
-                <Form.Control.Feedback type="invalid">
+                <Form.Control.Feedback type='invalid'>
                   {errors.description.message}
                 </Form.Control.Feedback>
               )}
             </Form.Group>
 
-            <div className="d-flex w-100">
-              <Button variant="secondary" onClick={closeModal}>
+            <div className='d-flex w-100'>
+              <Button variant='secondary' onClick={closeModal}>
                 Close
               </Button>
               <SpinningButton
-                name="Create"
+                name='Create'
                 isLoading={isCreatingTeam || isCreatingTeamMember || isDeletingTeam}
-                variant="primary"
-                className="ms-auto waves-effect waves-light"
-                type="submit"
+                variant='primary'
+                className='ms-auto waves-effect waves-light'
+                type='submit'
               />
             </div>
           </Form>

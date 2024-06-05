@@ -1,11 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from 'next/navigation';
 
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
-import { useAppDispatch } from "@/redux/hooks";
-import { setAuth } from "@/redux/slices/authSlice";
+import { useAppDispatch } from '@/redux/hooks';
+import { setAuth } from '@/redux/slices/authSlice';
 
 
 export default function useSocialAuth(provider: string, authenticate: any) {
@@ -15,8 +15,8 @@ export default function useSocialAuth(provider: string, authenticate: any) {
   const effectRan = useRef(false);
 
   useEffect(() => {
-    const state = searchParams.get("state");
-    const code = searchParams.get("code");
+    const state = searchParams.get('state');
+    const code = searchParams.get('code');
 
     if (state && code && !effectRan.current) {
       authenticate({ provider, state, code })
@@ -24,11 +24,11 @@ export default function useSocialAuth(provider: string, authenticate: any) {
         .then(() => {
           dispatch(setAuth());
           toast.success("Logged in");
-          router.push("/");
+          router.push('/');
         })
         .catch(() => {
           toast.error("Login failed!");
-          router.push("/auth/login");
+          router.push('/auth/login');
         });
     }
 

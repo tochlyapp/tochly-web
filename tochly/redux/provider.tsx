@@ -1,7 +1,7 @@
 'use client';
 
-import { makestore } from "@/redux/store";
-import { Provider } from "react-redux";
+import { makestore } from '@/redux/store';
+import { Provider } from 'react-redux';
 
 
 type Props = {

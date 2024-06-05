@@ -1,24 +1,24 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
-import Card from "react-bootstrap/Card";
-import CardBody from "react-bootstrap/CardBody";
-import Col from "react-bootstrap/Col";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import Row from "react-bootstrap/Row";
+import Card from 'react-bootstrap/Card';
+import CardBody from 'react-bootstrap/CardBody';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Row from 'react-bootstrap/Row';
 
-import { toast } from "react-toastify";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { toast } from 'react-toastify';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
-import { Header } from "@/app/auth/components";
-import { SpinningButton } from "@/app/components";
+import { Header } from '@/app/auth/components';
+import { SpinningButton } from '@/app/components';
 
-import { useResetPasswordConfirmMutation } from "@/redux/services/authAPI";
+import { useResetPasswordConfirmMutation } from '@/redux/services/authAPI';
 
 
 type Props = {
@@ -39,8 +39,8 @@ const PasswordReset: React.FC<Props> = ({ params }) => {
     useResetPasswordConfirmMutation();
 
   const schema = yup.object().shape({
-    newPassword: yup.string().required("required").min(8).max(50),
-    reNewPassword: yup.string().required("required").min(8).max(50),
+    newPassword: yup.string().required('required').min(8).max(50),
+    reNewPassword: yup.string().required('required').min(8).max(50),
   });
 
   const {
@@ -65,73 +65,73 @@ const PasswordReset: React.FC<Props> = ({ params }) => {
         toast.error("Password resetting failed");
       })
       .finally(() => {
-        router.push("/auth/login");
+        router.push('/auth/login');
       });
   };
   return (
-    <div className="my-5 pt-sm-5">
+    <div className='my-5 pt-sm-5'>
       <Container>
-        <Row className="justify-content-center">
+        <Row className='justify-content-center'>
           <Col md={8} lg={6} xl={5}>
             <Header
               title="Password Reset"
               description="Enter new password below"
             />
             <Card>
-              <CardBody className="p-4">
+              <CardBody className='p-4'>
                 <Form noValidate onSubmit={handleSubmit(onSubmit)}>
-                  <Form.Group as={Col} md="12" controlId="newPassword">
+                  <Form.Group as={Col} md='12'>
                     <Form.Label>New Password</Form.Label>
                     <InputGroup
-                      className="input-group bg-soft-light rounded-3 mb-3"
+                      className='input-group bg-soft-light rounded-3 mb-3'
                       hasValidation
                     >
-                      <span className="input-group-text text-muted">
-                        <i className="ri-lock-2-line" />
+                      <span className='input-group-text text-muted'>
+                        <i className='ri-lock-2-line' />
                       </span>
                       <Form.Control
-                        {...register("newPassword")}
-                        type="text"
+                        {...register('newPassword')}
+                        type='text'
                         placeholder="New Password"
                         isInvalid={errors.newPassword ? true : false}
                       />
                       {errors.newPassword && (
-                        <Form.Control.Feedback type="invalid">
+                        <Form.Control.Feedback type='invalid'>
                           {errors.newPassword.message}
                         </Form.Control.Feedback>
                       )}
                     </InputGroup>
                   </Form.Group>
 
-                  <Form.Group as={Col} md="12" controlId="reNewPassword">
+                  <Form.Group as={Col} md='12' controlId='reNewPassword'>
                     <Form.Label>Confirm New Password</Form.Label>
                     <InputGroup
-                      className="input-group bg-soft-light rounded-3 mb-3"
+                      className='input-group bg-soft-light rounded-3 mb-3'
                       hasValidation
                     >
-                      <span className="input-group-text text-muted">
-                        <i className="ri-lock-2-line" />
+                      <span className='input-group-text text-muted'>
+                        <i className='ri-lock-2-line' />
                       </span>
                       <Form.Control
-                        {...register("reNewPassword")}
-                        type="text"
+                        {...register('reNewPassword')}
+                        type='text'
                         placeholder="Confirm New Password"
                         isInvalid={errors.newPassword ? true : false}
                       />
                       {errors.reNewPassword && (
-                        <Form.Control.Feedback type="invalid">
+                        <Form.Control.Feedback type='invalid'>
                           {errors.reNewPassword.message}
                         </Form.Control.Feedback>
                       )}
                     </InputGroup>
                   </Form.Group>
-                  <div className="d-grid">
+                  <div className='d-grid'>
                     <SpinningButton
-                      name="Reset"
+                      name='Reset'
                       isLoading={isLoading}
-                      variant="primary"
-                      className=" waves-effect waves-light"
-                      type="submit"
+                      variant='primary'
+                      className='waves-effect waves-light'
+                      type='submit'
                     />
                   </div>
                 </Form>

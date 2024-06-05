@@ -1,18 +1,18 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type {
   BaseQueryFn,
   FetchArgs,
   FetchBaseQueryError,
-} from "@reduxjs/toolkit/query";
-import { Mutex } from "async-mutex";
+} from '@reduxjs/toolkit/query';
+import { Mutex } from 'async-mutex';
 
-import { setAuth, logout } from "@/redux/slices/authSlice";
+import { setAuth, logout } from '@/redux/slices/authSlice';
 
 
 const mutex = new Mutex();
 const baseQuery = fetchBaseQuery({
   baseUrl: `${process.env.NEXT_PUBLIC_HOST}/api`,
-  credentials: "include",
+  credentials: 'include',
 });
 
 const baseQueryWithReauth: BaseQueryFn<
@@ -29,8 +29,8 @@ const baseQueryWithReauth: BaseQueryFn<
       try {
         const refreshResult = await baseQuery(
           {
-            url: "/jwt/refresh/",
-            method: "POST",
+            url: '/jwt/refresh/',
+            method: 'POST',
           },
           api,
           extraOptions
@@ -54,7 +54,7 @@ const baseQueryWithReauth: BaseQueryFn<
 };
 
 export const baseAPI = createApi({
-  reducerPath: "api",
+  reducerPath: 'api',
   baseQuery: baseQueryWithReauth,
   tagTypes: ['Teams'],
   endpoints: () => ({}),

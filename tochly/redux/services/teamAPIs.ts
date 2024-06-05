@@ -12,11 +12,11 @@ type Team = {
 const teamAPI = baseAPI.injectEndpoints({
   endpoints: (builder) => ({
     getTeams: builder.query<Team[], void>({
-      query: () => "/teams/",
+      query: () => '/teams/',
       providesTags: ['Teams']
     }),
     getUserTeams: builder.query<Team[], void>({
-      query: () => "/user/teams/",
+      query: () => '/user/teams/',
       providesTags: ['Teams']
     }),
     getTeam: builder.query<Team, string>({
@@ -27,8 +27,8 @@ const teamAPI = baseAPI.injectEndpoints({
     }),
     createTeam: builder.mutation({
       query: ({ name, description }) => ({
-        url: "/teams/",
-        method: "POST",
+        url: '/teams/',
+        method: 'POST',
         body: { name, description },
       }),
       invalidatesTags: ['Teams']
@@ -36,7 +36,7 @@ const teamAPI = baseAPI.injectEndpoints({
     deleteTeam: builder.mutation({
       query: (teamId) => ({
         url: `/teams/${teamId}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
       invalidatesTags: ['Teams']
     }),
