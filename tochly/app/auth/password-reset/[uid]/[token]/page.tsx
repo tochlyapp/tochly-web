@@ -7,7 +7,6 @@ import CardBody from 'react-bootstrap/CardBody';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 
 import { toast } from 'react-toastify';
@@ -16,9 +15,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import { Header } from '@/app/auth/components';
-import { SpinningButton } from '@/app/components';
+import { SpinningButton, FormGroup } from '@/app/components';
 
 import { useResetPasswordConfirmMutation } from '@/redux/services/authAPI';
+
+import { FormInputError } from '@/app/types';
 
 
 type Props = {
@@ -80,51 +81,28 @@ const PasswordReset: React.FC<Props> = ({ params }) => {
             <Card>
               <CardBody className='p-4'>
                 <Form noValidate onSubmit={handleSubmit(onSubmit)}>
-                  <Form.Group as={Col} md='12'>
-                    <Form.Label>New Password</Form.Label>
-                    <InputGroup
-                      className='input-group bg-soft-light rounded-3 mb-3'
-                      hasValidation
-                    >
-                      <span className='input-group-text text-muted'>
-                        <i className='ri-lock-2-line' />
-                      </span>
-                      <Form.Control
-                        {...register('newPassword')}
-                        type='text'
-                        placeholder="New Password"
-                        isInvalid={errors.newPassword ? true : false}
-                      />
-                      {errors.newPassword && (
-                        <Form.Control.Feedback type='invalid'>
-                          {errors.newPassword.message}
-                        </Form.Control.Feedback>
-                      )}
-                    </InputGroup>
-                  </Form.Group>
-
-                  <Form.Group as={Col} md='12' controlId='reNewPassword'>
-                    <Form.Label>Confirm New Password</Form.Label>
-                    <InputGroup
-                      className='input-group bg-soft-light rounded-3 mb-3'
-                      hasValidation
-                    >
-                      <span className='input-group-text text-muted'>
-                        <i className='ri-lock-2-line' />
-                      </span>
-                      <Form.Control
-                        {...register('reNewPassword')}
-                        type='text'
-                        placeholder="Confirm New Password"
-                        isInvalid={errors.newPassword ? true : false}
-                      />
-                      {errors.reNewPassword && (
-                        <Form.Control.Feedback type='invalid'>
-                          {errors.reNewPassword.message}
-                        </Form.Control.Feedback>
-                      )}
-                    </InputGroup>
-                  </Form.Group>
+                  <FormGroup 
+                    label='New Password'
+                    fieldName='newPassword'
+                    type='password'
+                    md='12'
+                    hasValidation
+                    register={register('newPassword')}
+                    inputError={errors.newPassword as FormInputError}
+                    placeholder="New Password"
+                    classNameInputIcon='ri-lock-2-line'
+                  />
+                  <FormGroup 
+                    label='Confirm New Password'
+                    fieldName='reNewPassword'
+                    type='password'
+                    md='12'
+                    hasValidation
+                    register={register('reNewPassword')}
+                    inputError={errors.reNewPassword as FormInputError}
+                    placeholder="Confirm New Password"
+                    classNameInputIcon='ri-lock-2-line'
+                  />
                   <div className='d-grid'>
                     <SpinningButton
                       name='Reset'

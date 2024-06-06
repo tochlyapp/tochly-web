@@ -25,9 +25,11 @@ import {
 import { useCreateTeamMemberMutation } from '@/redux/services/memberAPI';
 import { useGetCurrentUserQuery } from '@/redux/services/authAPI';
 
-import { SpinningButton } from '@/app/components';
+import { SpinningButton, FormGroup } from '@/app/components';
 
 import { TEAM_PERMISION_OWNER } from '@/app/constants';
+
+import { FormInputError } from '@/app/types';
 
 
 type FormInput = {
@@ -145,36 +147,29 @@ export default function Page() {
         </Modal.Header>
         <Modal.Body>
           <Form noValidate onSubmit={handleSubmit(onSubmit)}>
-            <Form.Group className='mb-3'>
-              <Form.Label>Name</Form.Label>
-              <Form.Control 
-                {...register('name')}
-                type='text'
-                className='border-secondary' 
-                isInvalid={errors.name ? true : false}
-              />
-              {errors.name && (
-                <Form.Control.Feedback type='invalid'>
-                  {errors.name.message}
-                </Form.Control.Feedback>
-              )}
-            </Form.Group>
-            <Form.Group className='mb-3' controlId='description'>
-              <Form.Label>Description</Form.Label>
-              <Form.Control 
-                {...register('description')}
-                as='textarea' 
-                rows={3} 
-                className='border-secondary' 
-                isInvalid={errors.description ? true : false}
-              />
-              {errors.description && (
-                <Form.Control.Feedback type='invalid'>
-                  {errors.description.message}
-                </Form.Control.Feedback>
-              )}
-            </Form.Group>
-
+            <FormGroup 
+              label='Name'
+              fieldName='name'
+              type='text'
+              md='12'
+              hasValidation
+              register={register('name')}
+              inputError={errors.name as FormInputError}
+              placeholder="Team Name"
+              classNameInput='border-secondary'
+            />
+            <FormGroup 
+              label='Description'
+              fieldName='description'
+              type='textarea'
+              md='12'
+              hasValidation
+              register={register('description')}
+              inputError={errors.description as FormInputError}
+              classNameInput='border-secondary'
+              textArea
+            />
+            
             <div className='d-flex w-100'>
               <Button variant='secondary' onClick={closeModal}>
                 Close

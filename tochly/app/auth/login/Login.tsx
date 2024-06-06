@@ -13,13 +13,14 @@ import CardBody from 'react-bootstrap/CardBody';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 
 import { Header, SocialButtons } from '@/app/auth/components';
-import { SpinningButton } from '@/app/components';
+import { SpinningButton, FormGroup } from '@/app/components';
 
 import { useLoginMutation } from '@/redux/services/authAPI';
+
+import { FormInputError } from '@/app/types';
 
 
 type FormInput = {
@@ -66,59 +67,36 @@ const Login: React.FC = () => {
             <Card>
               <CardBody className='p-4'>
                 <Form noValidate onSubmit={handleSubmit(onSubmit)}>
-                  <Form.Group as={Col} md='12' controlId='email'>
-                    <Form.Label>Email</Form.Label>
-                    <InputGroup
-                      className='input-group bg-soft-light rounded-3 mb-3'
-                      hasValidation
+                  <FormGroup 
+                    label='Email'
+                    fieldName='email'
+                    type='text'
+                    md='12'
+                    hasValidation
+                    register={register('email')}
+                    inputError={errors.email as FormInputError}
+                    placeholder='Email'
+                    classNameInputIcon='ri-mail-line'
+                  />
+                  <div className='float-end'>
+                    <Link
+                      href='/auth/password-reset'
+                      className='text-muted font-size-13'
                     >
-                      <span className='input-group-text text-muted'>
-                        <i className='ri-mail-line' />
-                      </span>
-                      <Form.Control
-                        {...register('email')}
-                        type='text'
-                        placeholder='Email'
-                        isInvalid={errors.email ? true : false}
-                      />
-                      {errors.email && (
-                        <Form.Control.Feedback type='invalid'>
-                          {errors.email.message}
-                        </Form.Control.Feedback>
-                      )}
-                    </InputGroup>
-                  </Form.Group>
-
-                  <Form.Group as={Col} md='12' controlId='password'>
-                    <div className='float-end'>
-                      <Link
-                        href='/auth/password-reset'
-                        className='text-muted font-size-13'
-                      >
-                        Forgot password?
-                      </Link>
-                    </div>
-                    <Form.Label>Password</Form.Label>
-                    <InputGroup
-                      className='input-group bg-soft-light rounded-3 mb-3'
-                      hasValidation
-                    >
-                      <span className='input-group-text text-muted'>
-                        <i className='ri-lock-2-line' />
-                      </span>
-                      <Form.Control
-                        {...register('password')}
-                        type='password'
-                        placeholder='Password'
-                        isInvalid={errors.password ? true : false}
-                      />
-                      {errors.password && (
-                        <Form.Control.Feedback type='invalid'>
-                          {errors.password.message}
-                        </Form.Control.Feedback>
-                      )}
-                    </InputGroup>
-                  </Form.Group>
+                      Forgot password?
+                    </Link>
+                  </div>
+                  <FormGroup 
+                    label='Password'
+                    fieldName='password'
+                    type='password'
+                    md='12'
+                    hasValidation
+                    register={register('password')}
+                    inputError={errors.password as FormInputError}
+                    placeholder='Password'
+                    classNameInputIcon='ri-lock-2-line'
+                  />
 
                   <div className='d-grid'>
                     <SpinningButton

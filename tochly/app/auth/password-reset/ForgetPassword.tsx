@@ -8,7 +8,6 @@ import CardBody from 'react-bootstrap/CardBody';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 
 import { toast } from 'react-toastify';
@@ -17,9 +16,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import { Header } from '@/app/auth/components';
-import { SpinningButton } from '@/app/components';
+import { SpinningButton, FormGroup } from '@/app/components';
 
 import { useResetPasswordMutation } from '@/redux/services/authAPI';
+
+import { FormInputError } from '@/app/types';
 
 
 type FormInput = {
@@ -65,28 +66,17 @@ const ForgotPassword: React.FC = () => {
                   Enter your Email and instructions will be sent to you
                 </Alert>
                 <Form noValidate onSubmit={handleSubmit(onSubmit)}>
-                  <Form.Group as={Col} md='12' controlId='email'>
-                    <Form.Label>Email</Form.Label>
-                    <InputGroup
-                      className='input-group bg-soft-light rounded-3 mb-3'
-                      hasValidation
-                    >
-                      <span className='input-group-text text-muted'>
-                        <i className='ri-mail-line' />
-                      </span>
-                      <Form.Control
-                        {...register('email')}
-                        type='text'
-                        placeholder='Email'
-                        isInvalid={errors.email ? true : false}
-                      />
-                      {errors.email && (
-                        <Form.Control.Feedback type='invalid'>
-                          {errors.email.message}
-                        </Form.Control.Feedback>
-                      )}
-                    </InputGroup>
-                  </Form.Group>
+                  <FormGroup 
+                    label='Email'
+                    fieldName='email'
+                    type='text'
+                    md='12'
+                    hasValidation
+                    register={register('email')}
+                    inputError={errors.email as FormInputError}
+                    placeholder='Email'
+                    classNameInputIcon='ri-mail-line'
+                  />
                   <div className='d-grid'>
                     <SpinningButton
                       name='Reset'

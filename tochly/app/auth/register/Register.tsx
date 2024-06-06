@@ -13,13 +13,14 @@ import CardBody from 'react-bootstrap/CardBody';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 
 import { Header, SocialButtons } from '@/app/auth/components';
-import { SpinningButton } from '@/app/components';
+import { SpinningButton, FormGroup } from '@/app/components';
 
 import { useSignUpMutation } from '@/redux/services/authAPI';
+
+import { FormInputError } from '@/app/types';
 
 
 type FormInput = {
@@ -81,121 +82,63 @@ const Register: React.FC = () => {
               <CardBody className="p-4">
                 <Form noValidate onSubmit={handleSubmit(onSubmit)}>
                   <Row>
-                    <Form.Group as={Col} md="6" controlId='firstName'>
-                      <Form.Label>First Name</Form.Label>
-                      <InputGroup
-                        className='input-group bg-soft-light rounded-3 mb-3'
-                        hasValidation
-                      >
-                        <span className='input-group-text text-muted'>
-                          <i className='ri-user-2-line' />
-                        </span>
-                        <Form.Control
-                          {...register('firstName')}
-                          type='text'
-                          placeholder='First Name'
-                          isInvalid={errors.firstName ? true : false}
-                        />
-                        {errors.firstName && (
-                          <Form.Control.Feedback type='invalid'>
-                            {errors.firstName.message}
-                          </Form.Control.Feedback>
-                        )}
-                      </InputGroup>
-                    </Form.Group>
-
-                    <Form.Group as={Col} md='6' controlId='lastName'>
-                      <Form.Label>Last Name</Form.Label>
-                      <InputGroup
-                        className='input-group bg-soft-light rounded-3 mb-3'
-                        hasValidation
-                      >
-                        <span className='input-group-text text-muted'>
-                          <i className='ri-user-2-line' />
-                        </span>
-                        <Form.Control
-                          {...register('lastName')}
-                          type='text'
-                          placeholder="Last Name"
-                          isInvalid={errors.lastName ? true : false}
-                        />
-                        {errors.lastName && (
-                          <Form.Control.Feedback type='invalid'>
-                            {errors.lastName.message}
-                          </Form.Control.Feedback>
-                        )}
-                      </InputGroup>
-                    </Form.Group>
+                    <FormGroup 
+                      label="First Name"
+                      fieldName='firstName'
+                      type='text'
+                      md='6'
+                      hasValidation
+                      register={register('firstName')}
+                      inputError={errors.firstName as FormInputError}
+                      placeholder="First Name"
+                      classNameInputIcon='ri-user-2-line'
+                    />
+                    <FormGroup 
+                      label="Last Name"
+                      fieldName='lastName'
+                      type='text'
+                      md='6'
+                      hasValidation
+                      register={register('lastName')}
+                      inputError={errors.lastName as FormInputError}
+                      placeholder="Last Name"
+                      classNameInputIcon='ri-user-2-line'
+                    />
                   </Row>
 
-                  <Form.Group as={Col} md='12' controlId='email'>
-                    <Form.Label>Email</Form.Label>
-                    <InputGroup
-                      className='input-group bg-soft-light rounded-3 mb-3'
-                      hasValidation
-                    >
-                      <span className='input-group-text text-muted'>
-                        <i className='ri-mail-line' />
-                      </span>
-                      <Form.Control
-                        {...register('email')}
-                        type='text'
-                        placeholder='Email'
-                        isInvalid={errors.email ? true : false}
-                      />
-                      {errors.email && (
-                        <Form.Control.Feedback type='invalid'>
-                          {errors.email.message}
-                        </Form.Control.Feedback>
-                      )}
-                    </InputGroup>
-                  </Form.Group>
-
-                  <Form.Group as={Col} md='12' controlId='password'>
-                    <Form.Label>Password</Form.Label>
-                    <InputGroup
-                      className='input-group bg-soft-light rounded-3 mb-3'
-                      hasValidation
-                    >
-                      <span className='input-group-text text-muted'>
-                        <i className='ri-lock-2-line' />
-                      </span>
-                      <Form.Control
-                        {...register('password')}
-                        type='password'
-                        placeholder='Password'
-                        isInvalid={errors.password ? true : false}
-                      />
-                      {errors.password && (
-                        <Form.Control.Feedback type='invalid'>
-                          {errors.password.message}
-                        </Form.Control.Feedback>
-                      )}
-                    </InputGroup>
-                  </Form.Group>
-
-                  <Form.Group as={Col} md='12' controlId='rePassword'>
-                    <Form.Label>Confirm Password</Form.Label>
-                    <InputGroup
-                      className='input-group bg-soft-light rounded-3 mb-3'
-                      hasValidation
-                    >
-                      <span className='input-group-text text-muted'>
-                        <i className="ri-lock-2-line" />
-                      </span>
-                      <Form.Control
-                        {...register('rePassword')}
-                        type='password'
-                        placeholder='Retype Password'
-                        isInvalid={errors.rePassword ? true : false}
-                      />
-                      {errors.password && (
-                        <Form.Control.Feedback type='invalid'>
-                          {errors.password.message}
-                        </Form.Control.Feedback>
-                      )}
-                    </InputGroup>
-                  </Form.Group>
+                  <FormGroup 
+                    label='Email'
+                    fieldName='email'
+                    type='text'
+                    md='12'
+                    hasValidation
+                    register={register('email')}
+                    inputError={errors.email as FormInputError}
+                    placeholder='Email'
+                    classNameInputIcon='ri-mail-line'
+                  />
+                  <FormGroup 
+                    label='Password'
+                    fieldName='password'
+                    type='password'
+                    md='12'
+                    hasValidation
+                    register={register('password')}
+                    inputError={errors.password as FormInputError}
+                    placeholder='Password'
+                    classNameInputIcon='ri-lock-2-line'
+                  />
+                  <FormGroup 
+                    label="Confirm Password"
+                    fieldName='rePassword'
+                    type='password'
+                    md='12'
+                    hasValidation
+                    register={register('rePassword')}
+                    inputError={errors.rePassword as FormInputError}
+                    placeholder="Confirm Password"
+                    classNameInputIcon='ri-lock-2-line'
+                  />
 
                   <div className='d-grid'>
                     <SpinningButton
