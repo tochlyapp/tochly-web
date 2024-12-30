@@ -72,8 +72,8 @@ const Register = () => {
   });
 
   if (isAuthenticated) {
-		return <Navigate to="/" />;
-	}
+    return <Navigate to="/" />;
+  }
 
   return (
     <React.Fragment>
