@@ -1,14 +1,14 @@
 import React from 'react';
 import { 
-	Container, 
-	Row, 
-	Col, 
-	Card, 
-	CardBody, 
-	FormGroup, 
-	Form, 
-	Input, 
-	Label, 
+  Container, 
+  Row, 
+  Col, 
+  Card, 
+  CardBody, 
+  FormGroup, 
+  Form, 
+  Input, 
+  Label, 
 } from 'reactstrap';
 import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -30,11 +30,11 @@ type FormInput = {
 };
 
 const Login = () => {
-	const { t } = useTranslation();
-	const navigate = useNavigate();
+  const { t } = useTranslation();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-	const [login, { isLoading }] = useLoginMutation();
-	const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const [login, { isLoading }] = useLoginMutation();
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   const formik = useFormik({
 		initialValues: {
