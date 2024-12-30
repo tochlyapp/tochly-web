@@ -1,0 +1,1 @@
+export type { FormInputError } from 'src/types/form';

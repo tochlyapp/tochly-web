@@ -1,0 +1,1 @@
+export const TEAM_PERMISION_OWNER = 'OWNER'
