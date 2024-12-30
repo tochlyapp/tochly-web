@@ -10,7 +10,6 @@ import Routes from 'src/routes';
 
 import 'src/assets/scss/themes.scss';
 
-
 function App() {
   const dispatch = useAppDispatch();
   const { data: profile, isLoading } = useGetCurrentUserProfileQuery();

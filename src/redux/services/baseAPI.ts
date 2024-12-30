@@ -8,13 +8,11 @@ import { Mutex } from 'async-mutex';
 
 import { setAuth, logout } from 'src/redux/slices/auth';
 
-
 const mutex = new Mutex();
 const baseQuery = fetchBaseQuery({
   baseUrl: `${process.env.REACT_APP_BACKEND_API}/api`,
   credentials: 'include',
 });
-
 
 const baseQueryWithReauth: BaseQueryFn<
   string | FetchArgs,

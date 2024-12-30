@@ -1,15 +1,11 @@
 import React, { Suspense } from 'react';
 import { Routes as SwitchRoute, Route, Navigate } from 'react-router-dom';
 
-// Import routes
-import { authProtectedRoutes, publicRoutes } from './routes';
-
-import { useAppSelector } from 'src/redux/hooks';
-
-// Import layouts
 import NonAuthLayout from 'src/layouts/NonAuth';
 import AuthLayout from 'src/layouts/AuthLayout';
 
+import { authProtectedRoutes, publicRoutes } from './routes';
+import { useAppSelector } from 'src/redux/hooks';
 
 type Props = {
   children: React.ReactNode;

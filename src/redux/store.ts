@@ -5,7 +5,6 @@ import authReducer from 'src/redux/slices/auth';
 import chatReducer from 'src/redux/slices/chat';
 import layoutReducer from 'src/redux/slices/layout';
 
-
 export const makestore = () => (
   configureStore({
     reducer: {

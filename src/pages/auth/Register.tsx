@@ -20,7 +20,6 @@ import { useSignUpMutation } from 'src/redux/services/authAPI';
 import { Header, SocialButtons } from 'src/pages/auth/components';
 import { FormIputGroup, SpinningButton } from 'src/components';
 
-
 type FormInput = {
   firstName: string;
   lastName: string;

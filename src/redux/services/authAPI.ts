@@ -1,6 +1,5 @@
 import { baseAPI } from 'src/redux/services/baseAPI';
 
-
 type User = {
   first_name: string;
   last_name: string;

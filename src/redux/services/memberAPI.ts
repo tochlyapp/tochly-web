@@ -1,6 +1,5 @@
 import { baseAPI } from 'src/redux/services/baseAPI';
 
-
 const memberAPI = baseAPI.injectEndpoints({
   endpoints: (builder) => ({
     createTeamMember: builder.mutation({
