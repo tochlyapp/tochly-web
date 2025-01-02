@@ -11,7 +11,7 @@ const SocialButton: React.FC<Props> = ({ provider, type, ...others }) => {
   return (
     <Button
       size="lg"
-      className={`social-btn ${provider === 'Google' ? "google-btn" : "facebook-btn"}`}
+      className={`social-btn ${provider === "Google" ? "google-btn" : "facebook-btn"}`}
       {...others}
     >
       {provider === "Google" ? (

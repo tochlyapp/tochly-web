@@ -16,7 +16,7 @@ import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 
 import { Header } from 'src/pages/auth/components';
-import { FormIputGroup, SpinningButton } from 'src/components';
+import { FormInputGroup, SpinningButton } from 'src/components';
 
 import { useAppSelector } from 'src/redux/hooks';
 import { useResetPasswordMutation } from 'src/redux/services/authAPI';
@@ -74,7 +74,7 @@ const ForgetPassword = () => {
                     </Alert>
                     <Form onSubmit={formik.handleSubmit}>
                       <div className="mb-4">
-                        <FormIputGroup
+                        <FormInputGroup
 													label={t("Email")}
 													fieldName="email'"
 													type="text"

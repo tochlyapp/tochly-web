@@ -15,7 +15,7 @@ import {
 import { useCreateTeamMemberMutation } from 'src/redux/services/memberAPI';
 import { useGetCurrentUserQuery } from 'src/redux/services/authAPI';
 
-import { SpinningButton, FormIputGroup } from 'src/components';
+import { SpinningButton, FormInputGroup } from 'src/components';
 import { TEAM_PERMISION_OWNER } from 'src/pages/team/constants';
 
 type FormInput = {
@@ -105,7 +105,7 @@ export default function CreateTeam() {
           <ModalHeader>{t('Create New Team')}</ModalHeader>
           <ModalBody>
             <Form noValidate onSubmit={formik.handleSubmit}>
-              <FormIputGroup
+              <FormInputGroup
                 label={t("Name")}
                 fieldName="name"
                 type="text"
@@ -118,7 +118,7 @@ export default function CreateTeam() {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               />
-              <FormIputGroup
+              <FormInputGroup
                 label={t("Description")}
                 fieldName="description"
                 type="textarea"
@@ -130,7 +130,6 @@ export default function CreateTeam() {
                 invalid={!!(formik.touched.description && formik.errors.description)}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                textArea
               />
               <div className="d-flex w-100">
                 <Button color="secondary" onClick={toggleModal}>

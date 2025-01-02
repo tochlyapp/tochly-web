@@ -1,8 +1,13 @@
+const { pathsToModuleNameMapper } = require('ts-jest');
+const { compilerOptions } = require('./tsconfig');
+
 module.exports =  {
+  preset: 'ts-jest',
   testEnvironment: 'jsdom',
-  moduleNameMapper: {
-    '\\.(css|scss|sass|less)$': 'identity-obj-proxy', // Mock styles
-    '\\.(jpg|jpeg|png|gif|webp|svg)$': '<rootDir>/__mocks__/fileMock.js' // Mock assets
+  transform: {
+    '^.+\\.tsx?$': 'ts-jest', // Transpile TypeScript files
   },
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'], // Global setup
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
+  setupFilesAfterEnv: ["@testing-library/jest-dom"],
 };

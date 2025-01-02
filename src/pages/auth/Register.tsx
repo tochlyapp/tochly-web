@@ -18,7 +18,7 @@ import { useAppSelector } from 'src/redux/hooks';
 import { useSignUpMutation } from 'src/redux/services/authAPI';
 
 import { Header, SocialButtons } from 'src/pages/auth/components';
-import { FormIputGroup, SpinningButton } from 'src/components';
+import { FormInputGroup, SpinningButton } from 'src/components';
 
 type FormInput = {
   firstName: string;
@@ -93,7 +93,7 @@ const Register = () => {
                 <CardBody className="p-4">
                   <Form onSubmit={formik.handleSubmit}>
                     <Row>
-                      <FormIputGroup
+                      <FormInputGroup
                         label={t("First Name")}
                         fieldName="firstName"
                         type="text"
@@ -108,7 +108,7 @@ const Register = () => {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                       />
-                      <FormIputGroup
+                      <FormInputGroup
                         label={t("Last Name")}
                         fieldName="lastName"
                         type="text"
@@ -125,7 +125,7 @@ const Register = () => {
                       />
                     </Row>
                     <div className="mb-3">
-                      <FormIputGroup
+                      <FormInputGroup
                         label={t("Email")}
                         fieldName="email"
                         type="text"
@@ -141,7 +141,7 @@ const Register = () => {
                       />
                     </div>
                     <div className="mb-3">
-                      <FormIputGroup
+                      <FormInputGroup
                         label={t("Password")}
                         fieldName="password"
                         type="password"
@@ -157,7 +157,7 @@ const Register = () => {
                       />
                     </div>
                     <div className="mb-4">
-                      <FormIputGroup
+                      <FormInputGroup
                         label={t("Confirm Password")}
                         fieldName="rePassword"
                         type="password"

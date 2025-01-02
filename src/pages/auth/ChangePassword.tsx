@@ -14,7 +14,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import { Header } from 'src/pages/auth/components';
-import { FormIputGroup, SpinningButton } from 'src/components';
+import { FormInputGroup, SpinningButton } from 'src/components';
 
 import { useResetPasswordConfirmMutation } from 'src/redux/services/authAPI';
 
@@ -81,7 +81,7 @@ const formik = useFormik({
             <Card>
               <CardBody className="p-4">
                 <Form noValidate onSubmit={formik.handleSubmit}>
-                  <FormIputGroup 
+                  <FormInputGroup 
                     label={t("New Password")}
                     fieldName="newPassword"
                     type="password"
@@ -95,7 +95,7 @@ const formik = useFormik({
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
-                  <FormIputGroup 
+                  <FormInputGroup 
                     label={t("Confirm New Password")}
                     fieldName="reNewPassword"
                     type="password"

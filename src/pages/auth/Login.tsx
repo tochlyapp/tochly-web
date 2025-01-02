@@ -22,7 +22,7 @@ import { useLoginMutation } from 'src/redux/services/authAPI';
 import { setAuth } from 'src/redux/slices/auth';
 
 import { Header, SocialButtons } from 'src/pages/auth/components';
-import { FormIputGroup, SpinningButton } from 'src/components';
+import { FormInputGroup, SpinningButton } from 'src/components';
 
 type FormInput = {
   email: string;
@@ -86,7 +86,7 @@ const Login = () => {
 									<div className="p-3">
 										<Form onSubmit={formik.handleSubmit}>
 											<div className="mb-3">
-												<FormIputGroup
+												<FormInputGroup
 													label={t("Email")}
 													fieldName="email"
 													type="text"
@@ -109,7 +109,7 @@ const Login = () => {
 													</Link>
 												</div>
 
-												<FormIputGroup
+												<FormInputGroup
 													label="Password"
 													fieldName="password"
 													type="password"

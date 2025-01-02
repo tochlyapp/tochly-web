@@ -1,12 +1,14 @@
+import React from 'react';
 import { Input, FormFeedback, Label, InputGroup, Col } from 'reactstrap';
+import classNames from 'classnames';
 
 type InputType = 'text' | 'number' | 'password' | 'textarea';
 
 type FormInputGroupProps = {
   fieldName: string;
   label: string;
-  type: InputType;
-  value: string;
+  type: string;
+  value: string | number;
   md?: string;
   id?: string;
   hasValidation?: boolean;
@@ -15,41 +17,59 @@ type FormInputGroupProps = {
   classNameGroup?: string;
   classNameInput?: string;
   classNameInputIcon?: string;
-  textArea?: boolean;
   textAreaRowNumber?: number;
   invalid?: boolean;
   onChange?: (ev: React.ChangeEvent<any>) => void;
   onBlur?: (ev: any) => void;
-}
+};
 
-const FormGroup: React.FC<FormInputGroupProps> = (props) => {
+const FormIputGroup: React.FC<FormInputGroupProps> = ({
+  fieldName,
+  label,
+  type,
+  value,
+  md = "12",
+  id,
+  inputError,
+  placeholder = "",
+  classNameGroup,
+  classNameInput,
+  classNameInputIcon,
+  textAreaRowNumber = 3,
+  invalid,
+  onChange = () => {},
+  onBlur = () => {},
+}) => {
+  const inputId = id || fieldName;
+  const inputClass = classNames('form-control', classNameInput, {
+    'is-invalid': invalid,
+  });
+
   return (
-    <Col md={props.md || "12"}>
-      <Label className="form-label">{props.label}</Label>
-      <InputGroup className={props.classNameGroup}>
-        {props.classNameInputIcon && (
+    <Col md={md}>
+      <Label className="form-label" htmlFor={inputId}>{label}</Label>
+      <InputGroup className={classNameGroup}>
+        {classNameInputIcon && (
           <span className="input-group-text border-light text-muted">
-            <i className={props.classNameInputIcon}></i>
+            <i role="icon" className={classNameInputIcon}></i>
           </span>
         )}
         <Input
-          type={props.type}
-          id={props.id}
-          name={props.fieldName}
-          rows={(props.textArea && props.textAreaRowNumber) ? props.textAreaRowNumber : undefined}
-          className={props.classNameInput}
-          placeholder={props.placeholder || ""}
-          onChange={props.onChange}
-          onBlur={props.onBlur}
-          value={props.value}
-          invalid={props.invalid}
+          type={type as InputType}
+          id={inputId}
+          name={fieldName}
+          rows={type === "textarea" ? textAreaRowNumber : undefined}
+          className={inputClass}
+          placeholder={placeholder}
+          onChange={onChange}
+          onBlur={onBlur}
+          value={value}
+          invalid={invalid}
         />
-        {props.invalid && (
-          <FormFeedback>{props.inputError as any}</FormFeedback>
-        )}
+        {invalid && <FormFeedback>{inputError}</FormFeedback>}
       </InputGroup>
     </Col>
-  )
-}
+  );
+};
 
-export default FormGroup;
+export default FormIputGroup;
