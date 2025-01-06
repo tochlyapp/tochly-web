@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import { useAppDispatch } from 'src/redux/hooks';
 import { changeLayoutMode } from 'src/redux/slices/layout';
 import { useGetCurrentUserProfileQuery } from 'src/redux/services/authAPI';
 
-import { Authenticate } from 'src/pages/auth/components';
 import Routes from 'src/routes';
 
 import 'src/assets/scss/themes.scss';
@@ -24,7 +23,6 @@ function App() {
 
   return (
     <>
-      <Authenticate />
       <Routes />
       <ToastContainer />
     </>

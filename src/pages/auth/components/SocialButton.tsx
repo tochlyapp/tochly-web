@@ -10,6 +10,7 @@ type Props = {
 const SocialButton: React.FC<Props> = ({ provider, type, ...others }) => {
   return (
     <Button
+      aria-label="social-button"
       size="lg"
       className={`social-btn ${provider === "Google" ? "google-btn" : "facebook-btn"}`}
       {...others}

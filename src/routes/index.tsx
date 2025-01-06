@@ -3,6 +3,7 @@ import { Routes as SwitchRoute, Route, Navigate } from 'react-router-dom';
 
 import NonAuthLayout from 'src/layouts/NonAuth';
 import AuthLayout from 'src/layouts/auth-layout';
+import { Authenticate } from 'src/pages/auth/components';
 
 import { authProtectedRoutes, publicRoutes } from './routes';
 import { useAppSelector } from 'src/redux/hooks';
@@ -48,6 +49,7 @@ const Routes = () => {
               path={route.path}
               element={
                 <AuthProtected>
+                  <Authenticate />
                   <AuthLayout>{route.component}</AuthLayout>
                 </AuthProtected>
               }
