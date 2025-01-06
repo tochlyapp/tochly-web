@@ -91,7 +91,7 @@ const ForgetPassword = () => {
                       </div>
                       <div className="d-grid">
                         <SpinningButton
-                          name='Reset'
+                          buttonText='Reset'
                           isLoading={false}
                           color="primary"
                           className="waves-effect waves-light"

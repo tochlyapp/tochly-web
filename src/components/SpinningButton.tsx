@@ -3,18 +3,17 @@ import type { ButtonProps } from 'reactstrap';
 
 type Props = ButtonProps & {
   isLoading: boolean;
+  buttonText?: string;
 };
 
-const SpinningButton: React.FC<Props> = ({ name, isLoading, ...others }) => {
-  return (
-    <Button disabled={isLoading} {...others}>
-      {isLoading ? (
-        <Spinner animation="border" variant="light" size="sm" />
-      ) : (
-        name
-      )}
-    </Button>
-  );
-};
+const SpinningButton: React.FC<Props> = ({ buttonText, isLoading, ...others }) => (
+  <Button disabled={isLoading} {...others}>
+    {isLoading ? (
+      <Spinner role="status" type="border" color="light" size="sm" />
+    ) : (
+      buttonText
+    )}
+  </Button>
+);
 
 export default SpinningButton;

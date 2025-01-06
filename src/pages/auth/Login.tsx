@@ -134,7 +134,7 @@ const Login = () => {
 
 											<div className="d-grid">
 												<SpinningButton
-													name={t("Login")}
+													buttonText={t("Login")}
 													isLoading={isLoading}
 													color="primary"
 													className="waves-effect waves-light"

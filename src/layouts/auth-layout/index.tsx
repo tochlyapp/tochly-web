@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useAppDispatch } from 'src/redux/hooks';
 import { changeLayoutMode } from 'src/redux/slices/layout';
 
-import LeftSidebarMenu from 'src/layouts/AuthLayout/LeftSidebarMenu';
+import LeftSidebarMenu from 'src/layouts/auth-layout/LeftSidebarMenu';
 
 type AuthProps = {
   children: React.ReactNode;

@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { Routes as SwitchRoute, Route, Navigate } from 'react-router-dom';
 
 import NonAuthLayout from 'src/layouts/NonAuth';
-import AuthLayout from 'src/layouts/AuthLayout';
+import AuthLayout from 'src/layouts/auth-layout';
 
 import { authProtectedRoutes, publicRoutes } from './routes';
 import { useAppSelector } from 'src/redux/hooks';

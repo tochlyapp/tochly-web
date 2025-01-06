@@ -1,5 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { render, screen, fireEvent } from '@testing-library/react';
+
 import FormInputGroup from 'src/components/FormInputGroup';
 
 const getProps = (overrides = {}) => ({

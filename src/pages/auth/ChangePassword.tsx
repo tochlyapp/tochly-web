@@ -111,9 +111,9 @@ const formik = useFormik({
                   />
                   <div className="d-grid">
                     <SpinningButton
-                      name="Reset"
+                      buttonText="Reset"
                       isLoading={isLoading}
-                      variant='primary'
+                      color='primary'
                       className="waves-effect waves-light"
                       type="submit"
                     />

@@ -175,7 +175,7 @@ const Register = () => {
 
                     <div className="d-grid">
                       <SpinningButton
-                        name="Register"
+                        buttonText="Register"
                         isLoading={isLoading}
                         color="primary"
                         className="waves-effect waves-light"

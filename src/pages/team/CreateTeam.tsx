@@ -136,7 +136,7 @@ export default function CreateTeam() {
                   {t('Close')}
                 </Button>
                 <SpinningButton
-                  name={t('Create')}
+                  buttonText={t('Create')}
                   isLoading={isCreatingTeam || isCreatingTeamMember || isDeletingTeam}
                   color="primary"
                   className="ms-auto waves-effect waves-light"
