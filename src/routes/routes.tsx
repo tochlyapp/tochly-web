@@ -8,7 +8,7 @@ const Dashboard = React.lazy(() => import("../pages/dashbord/index"));
 const Login = React.lazy(() => import("../pages/auth/Login"));
 const ForgetPassword = React.lazy(() => import("../pages/auth/ForgetPassword"));
 const Register = React.lazy(() => import("../pages/auth/Register"));
-const Activate = React.lazy(() => import("../pages/auth/Activate"));
+const ActivateAccount = React.lazy(() => import("../pages/auth/ActivateAccount"));
 
 const authProtectedRoutes = [
   { path: "/team/:tid", component: <Chat /> },
@@ -20,7 +20,7 @@ const publicRoutes = [
   { path: "/auth/login", component: <Login /> },
   { path: "/auth/forget-password", component: <ForgetPassword /> },
   { path: "/auth/register", component: <Register /> },
-  { path: "/auth/activate/:uid/:token", component: <Activate /> },
+  { path: "/auth/activate/:uid/:token", component: <ActivateAccount /> },
 ];
 
 export { authProtectedRoutes, publicRoutes };

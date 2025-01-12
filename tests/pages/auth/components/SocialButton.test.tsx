@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import SocialButton from 'src/pages/auth/components/SocialButton';
 
 describe('SocialButton Component', () => {
