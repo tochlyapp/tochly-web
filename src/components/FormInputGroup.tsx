@@ -19,6 +19,7 @@ type FormInputGroupProps = {
   classNameInputIcon?: string;
   textAreaRowNumber?: number;
   invalid?: boolean;
+  errorAriaLabel?: string;
   onChange?: (ev: React.ChangeEvent<any>) => void;
   onBlur?: (ev: any) => void;
 };
@@ -37,6 +38,7 @@ const FormIputGroup: React.FC<FormInputGroupProps> = ({
   classNameInputIcon,
   textAreaRowNumber = 3,
   invalid,
+  errorAriaLabel,
   onChange = () => {},
   onBlur = () => {},
 }) => {
@@ -66,7 +68,7 @@ const FormIputGroup: React.FC<FormInputGroupProps> = ({
           value={value}
           invalid={invalid}
         />
-        {invalid && <FormFeedback>{inputError}</FormFeedback>}
+        {invalid && <FormFeedback aria-label={errorAriaLabel}>{inputError}</FormFeedback>}
       </InputGroup>
     </Col>
   );

@@ -27,7 +27,7 @@ type FormInput = {
 
 const ForgetPassword = () => {
   const { t } = useTranslation();
-  const [resetPassword] = useResetPasswordMutation()
+  const [resetPassword, { isLoading }] = useResetPasswordMutation()
 
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
@@ -55,7 +55,7 @@ const ForgetPassword = () => {
   return (
     <React.Fragment>
       <Helmet>
-        <title>Reset Password | Tochly</title>
+        <title>Forgot Password | Tochly</title>
         <meta name="description" content={t("Tochly password reset page")} />
       </Helmet>
       <div className="account-pages my-5 pt-sm-5">
@@ -76,7 +76,7 @@ const ForgetPassword = () => {
                       <div className="mb-4">
                         <FormInputGroup
 													label={t("Email")}
-													fieldName="email'"
+													fieldName="email"
 													type="text"
 													value={formik.values.email}
 													inputError={formik.errors.email}
@@ -92,7 +92,7 @@ const ForgetPassword = () => {
                       <div className="d-grid">
                         <SpinningButton
                           buttonText='Reset'
-                          isLoading={false}
+                          isLoading={isLoading}
                           color="primary"
                           className="waves-effect waves-light"
                           type="submit"

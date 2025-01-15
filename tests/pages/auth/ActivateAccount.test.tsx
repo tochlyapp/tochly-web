@@ -29,7 +29,7 @@ describe('ActivateAccount Component', () => {
   const mockStore = configureStore([]);
   const store = mockStore({});
 
-  const mockActivate = jest.fn(() => Promise.resolve());
+  const mockActivate = jest.fn();
   const mockUnwrap = jest.fn();
 
   beforeEach(() => {

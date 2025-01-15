@@ -64,8 +64,7 @@ const Register = () => {
         );
         navigate('/auth/login');
       })
-      .catch((error) => {
-        console.log('error', error)
+      .catch(() => {
         toast.error(t('Account registration failed!'));
       });
     },
@@ -104,6 +103,7 @@ const Register = () => {
                         classNameGroup="input-group bg-soft-light rounded-3 mb-3"
                         classNameInput="form-control form-control-lg border-light bg-soft-light"
                         classNameInputIcon="ri-user-2-line"
+                        errorAriaLabel="first-name-error"
                         invalid={!!(formik.touched.firstName && formik.errors.firstName)}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -119,6 +119,7 @@ const Register = () => {
                         classNameGroup="input-group bg-soft-light rounded-3 mb-3"
                         classNameInput="form-control form-control-lg border-light bg-soft-light"
                         classNameInputIcon="ri-user-2-line"
+                        errorAriaLabel="last-name-error"
                         invalid={!!(formik.touched.email && formik.errors.email)}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -135,6 +136,7 @@ const Register = () => {
                         classNameGroup="input-group bg-soft-light rounded-3 mb-3"
                         classNameInput="form-control form-control-lg border-light bg-soft-light"
                         classNameInputIcon="ri-mail-line"
+                        errorAriaLabel="email-error"
                         invalid={!!(formik.touched.email && formik.errors.email)}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -151,6 +153,7 @@ const Register = () => {
                         classNameGroup="input-group bg-soft-light rounded-3 mb-3"
                         classNameInput="form-control form-control-lg border-light bg-soft-light"
                         classNameInputIcon="ri-lock-2-line"
+                        errorAriaLabel="password-error"
                         invalid={!!(formik.touched.email && formik.errors.password)}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -167,6 +170,7 @@ const Register = () => {
                         classNameGroup="input-group bg-soft-light rounded-3 mb-3"
                         classNameInput="form-control form-control-lg border-light bg-soft-light"
                         classNameInputIcon="ri-lock-2-line"
+                        errorAriaLabel="re-password-error"
                         invalid={!!(formik.touched.email && formik.errors.rePassword)}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -180,6 +184,7 @@ const Register = () => {
                         color="primary"
                         className="waves-effect waves-light"
                         type="submit"
+                        AriaLabel="submit-buttton"
                       />
                     </div>
 
