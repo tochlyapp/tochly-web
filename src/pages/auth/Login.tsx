@@ -104,7 +104,7 @@ const Login = () => {
 
 											<FormGroup className="mb-4">
 												<div className="float-end">
-													<Link to="/forget-password" className="text-muted font-size-13">
+													<Link to="/auth/forget-password" className="text-muted font-size-13">
 														{t("Forgot password")}?
 													</Link>
 												</div>
