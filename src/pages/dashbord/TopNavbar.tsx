@@ -7,6 +7,7 @@ import {
   Collapse,
   NavbarText,
   Container,
+  Nav,
 } from 'reactstrap';
 
 import CreateTeam from 'src/pages/team/CreateTeam';
@@ -22,22 +23,24 @@ export default function TopNavbar() {
   return (
     <Navbar color="primary" dark expand="lg">
       <Container>
-        <NavbarBrand href="/">
+        <NavbarBrand tag={Link} to="/">
           <big>
             <b>Tochly</b>
           </big>
         </NavbarBrand>
-        <NavbarToggler onClick={toggleNavbar} />
-        <Collapse isOpen={isOpen} navbar className="justify-content-end">
-          <NavbarText>
-            {isAuthenticated ? (
-              <CreateTeam />
-            ) : (
-              <Link to="/auth/login" className="text-white">
-                Sign in
-              </Link>
-            )}
-          </NavbarText>
+        <NavbarToggler onClick={toggleNavbar} aria-label="Toggle navigation" />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className="ms-auto" navbar>
+            <NavbarText>
+              {isAuthenticated ? (
+                <CreateTeam />
+              ) : (
+                <Link to="/auth/login" className="text-white">
+                  Sign in
+                </Link>
+              )}
+            </NavbarText>
+          </Nav>
         </Collapse>
       </Container>
     </Navbar>

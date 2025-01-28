@@ -19,7 +19,7 @@ const Header: React.FC<HeaderProps> = ({ title, description }) => {
       </picture>
     </Link>
 
-    <h4 role="title" className="auth-title">{title}</h4>
+    <h4 aria-label="title" className="auth-title">{title}</h4>
     <p className="text-muted mb-4">{description}</p>
   </div>
 )};

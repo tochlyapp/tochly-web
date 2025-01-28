@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
@@ -37,6 +36,8 @@ export default function CreateTeam() {
   const { data: teams } = useGetTeamByNameQuery(teamName, { skip });
   const { data: currentUser } = useGetCurrentUserQuery();
 
+  const isLoading = isCreatingTeam || isCreatingTeamMember || isDeletingTeam;
+
   const formik = useFormik<FormInput>({
     initialValues: {
       name: '',
@@ -59,7 +60,15 @@ export default function CreateTeam() {
     },
   });
 
-  const toggleModal = useCallback(() => setShow(!show), [show]);
+  const toggleModal = useCallback(() => {
+    setShow(!show);
+    if (!show) {
+      formik.resetForm();
+      setTeamName('');
+      setSkip(true);
+    }
+  }, [show, formik]);
+  
 
   const createMember = useCallback(() => {
     if (teams && teams.length > 0 && currentUser) {
@@ -72,7 +81,7 @@ export default function CreateTeam() {
       })
         .unwrap()
         .then(() => {
-          toast.success('Team created successfully');
+          toast.success(t('Team created successfully'));
           toggleModal(); // Close modal
         })
         .catch((error) => {
@@ -80,7 +89,7 @@ export default function CreateTeam() {
           toast.error(`Team creation failed! ${error.data?.name?.[0] || ''}`);
         });
     }
-  }, [createTeamMember, currentUser, deleteTeam, teams, toggleModal]);
+  }, [createTeamMember, currentUser, deleteTeam, teams, toggleModal, t]);
 
   useEffect(() => {
     if (!skip && teams) {
@@ -137,7 +146,7 @@ export default function CreateTeam() {
                 </Button>
                 <SpinningButton
                   buttonText={t('Create')}
-                  isLoading={isCreatingTeam || isCreatingTeamMember || isDeletingTeam}
+                  isLoading={isLoading}
                   color="primary"
                   className="ms-auto waves-effect waves-light"
                   type="submit"
