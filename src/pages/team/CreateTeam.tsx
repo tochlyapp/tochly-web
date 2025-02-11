@@ -15,7 +15,7 @@ import { useCreateTeamMemberMutation } from 'src/redux/services/memberAPI';
 import { useGetCurrentUserQuery } from 'src/redux/services/authAPI';
 
 import { SpinningButton, FormInputGroup } from 'src/components';
-import { TEAM_PERMISION_OWNER } from 'src/pages/team/constants';
+import { TEAM_ROLE_OWNER } from 'src/pages/team/constants';
 
 type FormInput = {
   name: string;
@@ -74,9 +74,9 @@ export default function CreateTeam() {
     if (teams && teams.length > 0 && currentUser) {
       const createdTeam = teams[0];
       createTeamMember({
-        user: currentUser.email,
-        teamId: createdTeam.id,
-        permissions: TEAM_PERMISION_OWNER,
+        user: currentUser.id,
+        teamTid: createdTeam.tid,
+        role: TEAM_ROLE_OWNER,
         isActive: true,
       })
         .unwrap()
@@ -85,7 +85,7 @@ export default function CreateTeam() {
           toggleModal(); // Close modal
         })
         .catch((error) => {
-          deleteTeam(createdTeam.id); // Rollback team creation
+          deleteTeam(createdTeam.tid); // Rollback team creation
           toast.error(`Team creation failed! ${error.data?.name?.[0] || ''}`);
         });
     }

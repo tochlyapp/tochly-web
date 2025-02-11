@@ -1,10 +1,14 @@
 import { baseAPI } from 'src/redux/services/baseAPI';
 
-type User = {
+type BaseUser = {
   first_name: string;
   last_name: string;
   email: string;
 };
+
+type User = BaseUser & {
+  id: number
+}
 
 type Profile = {
   id: number;
@@ -18,7 +22,7 @@ type Profile = {
   dark_mode: boolean;
 }
 
-type CreateUserArgs = User & {
+type CreateUserArgs = BaseUser & {
   password: string;
   re_password: string;
 };
@@ -37,7 +41,7 @@ type SocialAuthArgs = {
 const authAPI = baseAPI.injectEndpoints({
   endpoints: (builder) => ({
     getCurrentUser: builder.query<User, void>({
-      query: () => '/users/me/',
+      query: () => '/auth/users/me/',
     }),
     socialAuthenticate: builder.mutation<CreateUserResponse, SocialAuthArgs>({
       query: ({ provider, state, code }) => ({
@@ -60,7 +64,7 @@ const authAPI = baseAPI.injectEndpoints({
     }),
     signUp: builder.mutation<CreateUserResponse, CreateUserArgs>({
       query: ({ first_name, last_name, email, password, re_password }) => ({
-        url: '/users/',
+        url: '/auth/users/',
         method: 'POST',
         body: { first_name, last_name, email, password, re_password },
       }),

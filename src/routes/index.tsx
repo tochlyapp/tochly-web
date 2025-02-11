@@ -37,7 +37,10 @@ const Routes = () => {
               key={idx}
               path={route.path}
               element={
-                <NonAuthLayout>{route.component}</NonAuthLayout>
+                <NonAuthLayout>
+                  <Authenticate redirect={false} />
+                  {route.component}
+                </NonAuthLayout>
               }
             />
           ))}

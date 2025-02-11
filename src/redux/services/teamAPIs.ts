@@ -8,7 +8,7 @@ const teamAPI = baseAPI.injectEndpoints({
       providesTags: ['Team']
     }),
     getUserTeams: builder.query<Team[], void>({
-      query: () => '/user/teams/',
+      query: () => '/users/teams/',
       providesTags: ['Team']
     }),
     getTeam: builder.query<Team, string>({

@@ -1,1 +1,1 @@
-export const TEAM_PERMISION_OWNER = 'OWNER'
+export const TEAM_ROLE_OWNER = 'owner'
