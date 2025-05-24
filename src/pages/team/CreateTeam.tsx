@@ -17,7 +17,6 @@ import { useGetCurrentUserQuery } from 'src/redux/services/auth';
 import { SpinningButton, FormInputGroup } from 'src/components';
 import { TEAM_ROLE_OWNER } from 'src/pages/team/constants';
 
-
 import { startChat } from 'src/lib/socket';
 import { useSocket } from 'src/context/hooks';
 
@@ -40,8 +39,6 @@ export default function CreateTeam() {
 
   const { data: teams } = useGetTeamByNameQuery(teamName, { skip });
   const { data: currentUser } = useGetCurrentUserQuery();
-
-  
 
   const isLoading = isCreatingTeam || isCreatingTeamMember || isDeletingTeam;
 
