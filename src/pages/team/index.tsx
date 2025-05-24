@@ -1,10 +1,11 @@
-import React from 'react';
 import Chat from 'src/pages/chat';
+
+import { ChatProvider } from 'src/context';
 
 export default function Page() {
   return (
-    <>
-      <Chat />
-    </>
-  )
+      <ChatProvider>
+        <Chat />
+      </ChatProvider>
+  );
 }

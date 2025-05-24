@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Container, Row, Col } from 'reactstrap';
 
 import Header from 'src/pages/auth/components/Header';
-import { useActivateMutation } from 'src/redux/services/authAPI';
+import { useActivateMutation } from 'src/redux/services/auth';
 
 const ActivateAccount: React.FC = () => {
   const navigate = useNavigate();

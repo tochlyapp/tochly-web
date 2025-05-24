@@ -6,7 +6,7 @@ import configureStore from 'redux-mock-store';
 import { ToastContainer } from 'react-toastify';
 
 import Register from 'src/pages/auth/Register';
-import { useSignUpMutation } from 'src/redux/services/authAPI';
+import { useSignUpMutation } from 'src/redux/services/auth';
 
 // Mock translations
 jest.mock('react-i18next', () => ({

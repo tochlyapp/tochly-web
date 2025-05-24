@@ -15,6 +15,7 @@ File: Main Css File
 @import "./node_modules/bootstrap/scss/variables";
 @import "variables";
 @import "variables-dark";
+@import "global";
 @import "./node_modules/bootstrap/scss/mixins.scss";
 
 
@@ -39,4 +40,3 @@ File: Main Css File
 @import "custom/pages/user-chat";
 @import "custom/pages/user-profile-details";
 @import "custom/pages/authentication";
-

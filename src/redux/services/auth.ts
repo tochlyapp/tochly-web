@@ -1,4 +1,4 @@
-import { baseAPI } from 'src/redux/services/baseAPI';
+import { backendBaseAPI } from 'src/redux/services/base/baseAPI';
 
 type BaseUser = {
   first_name: string;
@@ -38,7 +38,7 @@ type SocialAuthArgs = {
   code: string;
 };
 
-const authAPI = baseAPI.injectEndpoints({
+const authAPI = backendBaseAPI.injectEndpoints({
   endpoints: (builder) => ({
     getCurrentUser: builder.query<User, void>({
       query: () => '/auth/users/me/',

@@ -6,7 +6,7 @@ import configureStore from 'redux-mock-store';
 import { ToastContainer } from 'react-toastify';
 
 import Login from 'src/pages/auth/Login';
-import { useLoginMutation } from 'src/redux/services/authAPI';
+import { useLoginMutation } from 'src/redux/services/auth';
 import { setAuth } from 'src/redux/slices/auth';
 
 // Mock translations

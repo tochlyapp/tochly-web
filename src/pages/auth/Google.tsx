@@ -1,6 +1,6 @@
 import { Container, Spinner } from 'reactstrap';
 
-import { useSocialAuthenticateMutation } from 'src/redux/services/authAPI';
+import { useSocialAuthenticateMutation } from 'src/redux/services/auth';
 import { useSocialAuth } from 'src/pages/auth/hooks';
 
 const Google = () => {

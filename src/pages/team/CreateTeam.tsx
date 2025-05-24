@@ -10,12 +10,16 @@ import {
   useGetTeamByNameQuery,
   useCreateTeamMutation, 
   useDeleteTeamMutation,
-} from 'src/redux/services/teamAPIs';
-import { useCreateTeamMemberMutation } from 'src/redux/services/memberAPI';
-import { useGetCurrentUserQuery } from 'src/redux/services/authAPI';
+} from 'src/redux/services/team';
+import { useCreateTeamMemberMutation } from 'src/redux/services/member';
+import { useGetCurrentUserQuery } from 'src/redux/services/auth';
 
 import { SpinningButton, FormInputGroup } from 'src/components';
 import { TEAM_ROLE_OWNER } from 'src/pages/team/constants';
+
+
+import { startChat } from 'src/lib/socket';
+import { useSocket } from 'src/context/hooks';
 
 type FormInput = {
   name: string;
@@ -28,6 +32,7 @@ export default function CreateTeam() {
   const [teamName, setTeamName] = useState('');
 
   const { t } = useTranslation();
+  const socket = useSocket();
 
   const [createTeam, { isLoading: isCreatingTeam }] = useCreateTeamMutation();
   const [createTeamMember, { isLoading: isCreatingTeamMember }] = useCreateTeamMemberMutation();
@@ -35,6 +40,8 @@ export default function CreateTeam() {
 
   const { data: teams } = useGetTeamByNameQuery(teamName, { skip });
   const { data: currentUser } = useGetCurrentUserQuery();
+
+  
 
   const isLoading = isCreatingTeam || isCreatingTeamMember || isDeletingTeam;
 
@@ -82,6 +89,11 @@ export default function CreateTeam() {
         .unwrap()
         .then(() => {
           toast.success(t('Team created successfully'));
+          // Create a personal chat space for user
+          startChat(
+            socket!, 
+            {team_id: createdTeam.tid, receiver_id: String(currentUser.id)}
+          );
           toggleModal(); // Close modal
         })
         .catch((error) => {
@@ -100,7 +112,11 @@ export default function CreateTeam() {
 
   return (
     <>
-      <Button onClick={toggleModal} type="button">
+      <Button 
+        color="light" 
+        className="create-team-btn" 
+        onClick={toggleModal} 
+      >
         {t('CREATE A NEW TEAM')}
       </Button>
       <div>

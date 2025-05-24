@@ -1,7 +1,7 @@
-import { baseAPI } from 'src/redux/services/baseAPI';
+import { backendBaseAPI } from 'src/redux/services/base/baseAPI';
 import { Team } from 'src/pages/team/types/team';
 
-const teamAPI = baseAPI.injectEndpoints({
+const teamAPI = backendBaseAPI.injectEndpoints({
   endpoints: (builder) => ({
     getTeams: builder.query<Team[], void>({
       query: () => '/teams/',

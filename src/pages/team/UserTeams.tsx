@@ -1,22 +1,21 @@
 import { Link } from 'react-router-dom';
-import { 
-  Button, 
-  Card, 
-  CardHeader, 
-  CardBody, 
-  CardSubtitle,
-  Spinner,
+import {
   Alert,
-} from 'reactstrap';
+  Container,
+  Button,
+  Card,
+  CardBody,
+  CardTitle,
+  Spinner,
+} from "reactstrap";
 
-import { useGetUserTeamsQuery } from 'src/redux/services/teamAPIs';
-import { useGetCurrentUserQuery } from 'src/redux/services/authAPI';
+import { useGetUserTeamsQuery } from 'src/redux/services/team';
+
 
 export default function UserTeams() {
   const { data: userTeams, isLoading: loadingTeams, isError: teamsError } = useGetUserTeamsQuery();
-  const { data: currentUser, isLoading: loadingUser, isError: userError } = useGetCurrentUserQuery();
 
-  if (loadingTeams || loadingUser) {
+  if (loadingTeams) {
     return (
       <div className="m-3 text-center">
         <Spinner color="primary" />
@@ -25,7 +24,7 @@ export default function UserTeams() {
     );
   }
 
-  if (teamsError || userError) {
+  if (teamsError) {
     return (
       <div className="m-3">
         <Alert color="danger">
@@ -37,27 +36,24 @@ export default function UserTeams() {
   
   return (
     <div className="m-3">
-      <Card>
-        <CardHeader className="bg-dark text-white">
-          Teams for <span aria-label="user-email">{currentUser?.email || 'Unknown User'}</span>
-        </CardHeader>
-        <CardBody>
+      <div className="landing-page">
+        <Container className="team-section">
           {userTeams && userTeams.length > 0 ? (
             userTeams.map(team => (
-              <div key={team.id} className="d-flex align-items-center mb-3">
-                <CardSubtitle className="me-3">{team.name}</CardSubtitle>
-                <div className="ms-auto">
-                  <Link aria-label={`team-link-${team.tid}`} to={`/team/${team.tid}`}>
-                    <Button color="primary">Open</Button>
+              <Card key={team.id} className="team-card">
+                <CardBody className="d-flex justify-content-between align-items-center">
+                  <CardTitle tag="h5" className="team-title">{team.name}</CardTitle>
+                  <Link aria-label={`team-link-${team.tid}`} to={`/teams/${team.tid}`}>
+                    <Button color="primary" className="open-btn">Open</Button>
                   </Link>
-                </div>
-              </div>
+                </CardBody>
+              </Card>
             ))
           ) : (
             <Alert color="info">No teams found.</Alert>
           )}
-        </CardBody>
-      </Card>
+        </Container>
+      </div>
     </div>
   );
 }

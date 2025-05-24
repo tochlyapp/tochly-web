@@ -15,7 +15,7 @@ import {
 import { Helmet } from 'react-helmet';
 
 import { useAppSelector } from 'src/redux/hooks';
-import { useSignUpMutation } from 'src/redux/services/authAPI';
+import { useSignUpMutation } from 'src/redux/services/auth';
 
 import { Header, SocialButtons } from 'src/pages/auth/components';
 import { FormInputGroup, SpinningButton } from 'src/components';

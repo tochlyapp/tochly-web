@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import ForgetPassword from 'src/pages/auth/ForgetPassword';
 import { ToastContainer } from 'react-toastify';
-import { useResetPasswordMutation } from 'src/redux/services/authAPI';
+import { useResetPasswordMutation } from 'src/redux/services/auth';
 
 // Mock translations
 jest.mock('react-i18next', () => ({

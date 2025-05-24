@@ -11,12 +11,12 @@ const Register = React.lazy(() => import("../pages/auth/Register"));
 const ActivateAccount = React.lazy(() => import("../pages/auth/ActivateAccount"));
 
 const authProtectedRoutes = [
-  { path: "/team/:tid", component: <Chat /> },
+  { path: "/teams/:tid", component: <Chat /> },
   { path: "*", component: <Navigate to="/" /> },
 ];
 
 const publicRoutes = [
-  { path: "/", component: <Dashboard /> },
+  { path: "/", component: <Dashboard />},
   { path: "/auth/login", component: <Login /> },
   { path: "/auth/forget-password", component: <ForgetPassword /> },
   { path: "/auth/register", component: <Register /> },

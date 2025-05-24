@@ -1,11 +1,11 @@
 import '@testing-library/jest-dom';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import UserTeams from 'src/pages/team/UserTeams';
-import { useGetUserTeamsQuery } from 'src/redux/services/teamAPIs';
-import { useGetCurrentUserQuery } from 'src/redux/services/authAPI';
+import { useGetUserTeamsQuery } from 'src/redux/services/team';
+import { useGetCurrentUserQuery } from 'src/redux/services/auth';
 
 // Mock RTK Query hooks
 jest.mock('src/redux/services/teamAPIs', () => ({

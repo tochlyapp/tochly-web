@@ -232,7 +232,7 @@ const Groups = () => {
                     className="p-4 chat-message-list chat-group-list"
                 >
                     <ul className="list-unstyled chat-list">
-                        {groups.map((group, key) => (
+                        {groups.map((group:any, key:any) => (
                             <li key={key}>
                                 <Link to="#">
                                     <div className="d-flex align-items-center">

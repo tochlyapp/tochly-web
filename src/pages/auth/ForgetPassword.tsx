@@ -19,7 +19,7 @@ import { Header } from 'src/pages/auth/components';
 import { FormInputGroup, SpinningButton } from 'src/components';
 
 import { useAppSelector } from 'src/redux/hooks';
-import { useResetPasswordMutation } from 'src/redux/services/authAPI';
+import { useResetPasswordMutation } from 'src/redux/services/auth';
 
 type FormInput = {
   email: string;

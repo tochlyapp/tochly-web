@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import { ToastContainer } from 'react-toastify';
-import { useActivateMutation } from 'src/redux/services/authAPI';
+import { useActivateMutation } from 'src/redux/services/auth';
 import ActivateAccount from 'src/pages/auth/ActivateAccount';
 
 jest.mock('react-i18next', () => ({

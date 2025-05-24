@@ -1,11 +1,11 @@
 import '@testing-library/jest-dom';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { ToastContainer } from 'react-toastify';
 import ChangePassword from 'src/pages/auth/ChangePassword';
-import { useResetPasswordConfirmMutation } from 'src/redux/services/authAPI';
+import { useResetPasswordConfirmMutation } from 'src/redux/services/auth';
 
 // Mock translations
 jest.mock('react-i18next', () => ({

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Nav, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import classnames from 'classnames';
 
-import { useLogoutMutation, usePatchCurrentUserProfileMutation } from 'src/redux/services/authAPI';
+import { useLogoutMutation, usePatchCurrentUserProfileMutation } from 'src/redux/services/auth';
 import { logout as logoutState } from 'src/redux/slices/auth';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { setActiveTab, changeLayoutMode } from 'src/redux/slices/layout';
@@ -31,14 +31,12 @@ type DropdownsType = {
 
 const LeftSidebarMenu: React.FC = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const [logout] = useLogoutMutation();
   const [patchCurrentUserProfile] = usePatchCurrentUserProfileMutation();
 
   const { layoutMode, activeTab } = useAppSelector((state) => state.layout);
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   const [dropdowns, setDropdowns] = useState<DropdownsType>({
     general: false,
@@ -116,12 +114,6 @@ const LeftSidebarMenu: React.FC = () => {
       dispatch(setActiveTab(storedTab));
     }
   }, [dispatch]);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/auth/login');
-    }
-  }, [isAuthenticated, navigate]);
 
   return (
     <div className="side-menu flex-lg-column me-lg-1">

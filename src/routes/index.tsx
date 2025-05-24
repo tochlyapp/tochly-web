@@ -1,9 +1,8 @@
 import React, { Suspense } from 'react';
-import { Routes as SwitchRoute, Route, Navigate } from 'react-router-dom';
+import { Routes as SwitchRoute, Route, Navigate, useLocation } from 'react-router-dom';
 
 import NonAuthLayout from 'src/layouts/NonAuth';
 import AuthLayout from 'src/layouts/auth-layout';
-import { Authenticate } from 'src/pages/auth/components';
 
 import { authProtectedRoutes, publicRoutes } from './routes';
 import { useAppSelector } from 'src/redux/hooks';
@@ -14,10 +13,11 @@ type Props = {
 }
 
 const AuthProtected: React.FC<Props> = (props) => {
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, loading } = useAppSelector((state) => state.auth);
+  const location = useLocation();
 
-  if (props.isAuthProtected && !isAuthenticated) {
-    return <Navigate to='/' />;
+  if (props.isAuthProtected && !loading && !isAuthenticated) {
+    return <Navigate to='/auth/login/' state={{ from: location }} replace />;
   }
 
   return <>{props.children}</>;
@@ -38,7 +38,6 @@ const Routes = () => {
               path={route.path}
               element={
                 <NonAuthLayout>
-                  <Authenticate redirect={false} />
                   {route.component}
                 </NonAuthLayout>
               }
@@ -51,8 +50,7 @@ const Routes = () => {
               key={idx}
               path={route.path}
               element={
-                <AuthProtected>
-                  <Authenticate />
+                <AuthProtected isAuthProtected={true}>
                   <AuthLayout>{route.component}</AuthLayout>
                 </AuthProtected>
               }

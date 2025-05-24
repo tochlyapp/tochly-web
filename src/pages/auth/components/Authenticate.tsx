@@ -3,13 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from 'src/redux/hooks';
 import { setAuth, finishLoading } from 'src/redux/slices/auth';
-import { useVerifyMutation } from 'src/redux/services/authAPI';
+import { useVerifyMutation } from 'src/redux/services/auth';
 
-type Props = {
-  redirect?: boolean;
-}
-
-const Authenticate: React.FC<Props> = ({ redirect=true }) => {
+const Authenticate: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [verify] = useVerifyMutation();
@@ -18,12 +14,14 @@ const Authenticate: React.FC<Props> = ({ redirect=true }) => {
     verify(undefined)
     .unwrap()
     .then(() => {
-      dispatch(setAuth())
+      dispatch(setAuth());
     })
     .finally(() => {
-      dispatch(finishLoading())
+      dispatch(finishLoading());
     }).catch(() => {
-      redirect && navigate('/auth/login');
+      navigate('/auth/login');
+    }).finally (() => {
+      dispatch(finishLoading());
     });
   }, [dispatch, navigate, verify])
   return (

@@ -3,7 +3,10 @@ import { ToastContainer } from 'react-toastify';
 
 import { useAppDispatch } from 'src/redux/hooks';
 import { changeLayoutMode } from 'src/redux/slices/layout';
-import { useGetCurrentUserProfileQuery } from 'src/redux/services/authAPI';
+import { useGetCurrentUserProfileQuery } from 'src/redux/services/auth';
+
+import { Authenticate } from 'src/pages/auth/components';
+import { SocketProvider } from 'src/context';
 
 import Routes from 'src/routes';
 
@@ -23,7 +26,10 @@ function App() {
 
   return (
     <>
-      <Routes />
+      <Authenticate />
+      <SocketProvider>
+        <Routes />
+      </SocketProvider>
       <ToastContainer />
     </>
   );

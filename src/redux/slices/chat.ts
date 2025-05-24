@@ -12,8 +12,17 @@ import img1 from "../../assets/images/small/img-1.jpg";
 import img2 from "../../assets/images/small/img-2.jpg";
 import img7 from "../../assets/images/small/img-7.jpg";
 
-const initialState = {
-	active_user : 3,
+import { TeamMember } from 'src/types';
+
+type ChatState = {
+  active_user: number;
+  users: any;
+  groups: any;
+  contacts: any;
+}
+
+const initialState: ChatState = {
+	active_user: 3,
   users: [
     //admin is sender and user in receiver
     { id : 0, name : "Patrick Hendricks", profilePicture : avatar2, status : "online", unRead : 0, roomType : "contact", isGroup: false, 

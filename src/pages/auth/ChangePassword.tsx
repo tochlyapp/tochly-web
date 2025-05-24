@@ -17,7 +17,7 @@ import * as Yup from 'yup';
 import { Header } from 'src/pages/auth/components';
 import { FormInputGroup, SpinningButton } from 'src/components';
 
-import { useResetPasswordConfirmMutation } from 'src/redux/services/authAPI';
+import { useResetPasswordConfirmMutation } from 'src/redux/services/auth';
 
 type FormInput = {
   newPassword: string;

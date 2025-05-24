@@ -7,12 +7,15 @@ import { Provider } from 'react-redux';
 import { makestore } from 'src/redux/store';
 import { BrowserRouter } from 'react-router-dom';
 
+// import { Authenticate } from 'src/pages/auth/components';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <Provider store={makestore()}>
     <React.Fragment>
       <BrowserRouter>
+        {/* <Authenticate /> */}
         <App />
       </BrowserRouter>
     </React.Fragment>
