@@ -1,12 +1,14 @@
 import { useEffect, useRef } from 'react';
+import { toast } from 'react-toastify';
 
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import { toast } from 'react-toastify';
-
 import { useAppDispatch } from 'src/redux/hooks';
+import { useAcceptInvitationMutation } from 'src/redux/services/invitation';
+
 import { setAuth } from 'src/redux/slices/auth';
+import { handleAcceptInvite } from 'src/lib/invitation';
 
 export default function useSocialAuth(provider: string, authenticate: any) {
   const dispatch = useAppDispatch();
@@ -14,6 +16,8 @@ export default function useSocialAuth(provider: string, authenticate: any) {
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const effectRan = useRef(false);
+
+  const [acceptInvite] = useAcceptInvitationMutation();
 
   useEffect(() => {
     const state = searchParams.get('state');
@@ -24,6 +28,8 @@ export default function useSocialAuth(provider: string, authenticate: any) {
         .unwrap()
         .then(() => {
           dispatch(setAuth());
+          const inviteToken = localStorage.getItem('invitationToken');
+				  if (inviteToken) handleAcceptInvite(acceptInvite, t, inviteToken);
           toast.success(t('Logged in'));
           navigate('/');
         })
@@ -36,5 +42,5 @@ export default function useSocialAuth(provider: string, authenticate: any) {
     return () => {
       effectRan.current = true;
     };
-  }, [provider, authenticate]);
+  }, [provider, authenticate, searchParams]);
 }

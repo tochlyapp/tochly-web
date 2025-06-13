@@ -1,1 +1,2 @@
-export const TEAM_ROLE_OWNER = 'owner'
+export const TEAM_ROLE_ADMIN = 'admin';
+export const TEAM_ROLE_MEMBER = 'member';

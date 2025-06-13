@@ -1,23 +1,9 @@
 import { backendBaseAPI } from 'src/redux/services/base/baseAPI';
-
-type BaseUser = {
-  first_name: string;
-  last_name: string;
-  email: string;
-};
-
-type User = BaseUser & {
-  id: number
-}
+import { User, BaseUser } from 'src/types/user';
 
 type Profile = {
   id: number;
   user: number,
-  display_name: string | null;
-  title: string | null;
-  phone_number: string | null;
-  online: boolean;
-  status: string;
   timezone: string | null;
   dark_mode: boolean;
 }

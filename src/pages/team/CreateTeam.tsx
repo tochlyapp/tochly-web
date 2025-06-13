@@ -15,7 +15,7 @@ import { useCreateTeamMemberMutation } from 'src/redux/services/member';
 import { useGetCurrentUserQuery } from 'src/redux/services/auth';
 
 import { SpinningButton, FormInputGroup } from 'src/components';
-import { TEAM_ROLE_OWNER } from 'src/pages/team/constants';
+import { TEAM_ROLE_ADMIN } from 'src/pages/team/constants';
 
 import { startChat } from 'src/lib/socket';
 import { useSocket } from 'src/context/hooks';
@@ -80,8 +80,8 @@ export default function CreateTeam() {
       createTeamMember({
         user: currentUser.id,
         teamTid: createdTeam.tid,
-        role: TEAM_ROLE_OWNER,
-        isActive: true,
+        role: TEAM_ROLE_ADMIN,
+        display_name: `${currentUser.first_name} ${currentUser.last_name}`,
       })
         .unwrap()
         .then(() => {
@@ -91,7 +91,7 @@ export default function CreateTeam() {
             socket!, 
             {team_id: createdTeam.tid, receiver_id: String(currentUser.id)}
           );
-          toggleModal(); // Close modal
+          toggleModal();
         })
         .catch((error) => {
           deleteTeam(createdTeam.tid); // Rollback team creation

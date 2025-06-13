@@ -33,7 +33,7 @@ const TeamMembers: React.FC<Props> = ({
     if(socket?.connected) {
       startChat(
         socket, 
-        {team_id: tid as string, receiver_id: String(teamMember.user)}
+        {team_id: tid as string, receiver_id: String(teamMember.user.id)}
       );
       setSearch('');
     }else {
@@ -50,10 +50,10 @@ const TeamMembers: React.FC<Props> = ({
         disableDotsControls={false}
         disableButtonsControls={false}
       >
-        {teamMembers.map(teamMember => (
-          <div key={teamMember.email} className="item clickable" onClick={handleMemberClick(teamMember)}>
+        {teamMembers?.map(teamMember => (
+          <div key={teamMember.id} className="item clickable" onClick={handleMemberClick(teamMember)}>
             <div className="user-status-box">
-              <div className={`avatar-xs mx-auto d-block chat-user-img ${teamMember.online && 'online'} `}>
+              <div aria-label='status' className={`avatar-xs mx-auto d-block chat-user-img ${teamMember.online && 'online'} `}>
                 <span className="avatar-title rounded-circle bg-primary-subtle text-primary">
                   {/* <img src={avatar2} alt="user-img" className="img-fluid rounded-circle" /> */}
                   {teamMember.full_name.charAt(0)}

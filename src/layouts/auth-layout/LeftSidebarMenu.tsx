@@ -133,11 +133,11 @@ const LeftSidebarMenu: React.FC = () => {
       {/* Side Menu */}
       <div className="flex-lg-column my-auto">
         <Nav className="side-menu-nav nav-pills justify-content-center" role="tablist">
-          {['profile', 'chat', 'group', 'contacts', 'settings'].map((tab: string) => (
+          {['profile', 'chat', 'group', 'members', 'settings'].map((tab: string) => (
             <NavItemWithTooltip
               id={tab}
               key={tab}
-              iconClassName={`ri-${tab === 'profile' ? 'user-2' : tab === 'chat' ? 'message-3' : tab}-line`}
+              iconClassName={`ri-${tab === 'profile' ? 'user-2' : tab === 'chat' ? 'message-3' : tab === 'members' ? 'contacts' : tab}-line`}
               NavLinkClassName={classnames({ active: activeTab === tab }) + ' mb-2'}
               tooltip={tab.charAt(0).toUpperCase() + tab.slice(1)}
               onClick={() => toggleTab(tab)}

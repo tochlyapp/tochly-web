@@ -1,3 +1,5 @@
+import { TeamMember } from "./member";
+
 type TMessageType = 'text' | 'image' | 'video' | 'audio' | 'file';
 
 export type ChatRoom = {
@@ -14,6 +16,7 @@ export type ChatRoom = {
 
 export type ChatContext = {
   activeChatRoom: ChatRoom | null;
-  setActiveChatRoom: (room: ChatRoom | null) => void;
+  setActiveChatRoom: (room: ChatRoom) => void;
+	currentMember: TeamMember | null;
+	setCurrentMember: (member: TeamMember) => void;
 }
-  

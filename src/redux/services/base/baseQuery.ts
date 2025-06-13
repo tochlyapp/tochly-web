@@ -5,6 +5,7 @@ import type {
 } from '@reduxjs/toolkit/query';
 import { Mutex } from 'async-mutex';
 
+import { reconnectSocket } from 'src/lib/socket';
 import { setAuth, logout } from 'src/redux/slices/auth';
 
 const mutex = new Mutex();
@@ -32,6 +33,7 @@ export const getBaseQuery = (baseQuery: any) => {
           );
           if (refreshResult.data) {
             api.dispatch(setAuth());
+            reconnectSocket();
             result = await baseQuery(args, api, extraOptions);
           } else {
             api.dispatch(logout());

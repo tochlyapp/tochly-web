@@ -21,7 +21,7 @@ jest.mock('src/redux/hooks', () => ({
 }));
 
 // Mock sign-up API
-jest.mock('src/redux/services/authAPI', () => ({
+jest.mock('src/redux/services/auth', () => ({
   useSignUpMutation: jest.fn(),
 }));
 
@@ -53,7 +53,7 @@ describe('Register Component', () => {
 
   it('renders the registration form', () => {
     renderComponent();
-    expect(screen.getByRole('title')).toBeInTheDocument();
+    expect(screen.getByLabelText('title')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('First Name')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Last Name')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();

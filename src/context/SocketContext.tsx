@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { io, Socket } from 'socket.io-client';
+import { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
+import { getSocket } from 'src/lib/socket';
 
 export const SocketContext = createContext<Socket<DefaultEventsMap, DefaultEventsMap> | null>(null);
 
@@ -12,12 +13,7 @@ export const SocketProvider = ({ children }: SocketProviderProps) => {
   const [socket, setSocket] = useState<Socket<DefaultEventsMap, DefaultEventsMap> | null>(null);
   
   useEffect(() => {
-    const socketInstance = io('http://localhost:8001', {
-      withCredentials: true,
-      autoConnect: false,
-    });
-
-    socketInstance.connect();
+    const socketInstance = getSocket();
     setSocket(socketInstance);
   
     return () => {

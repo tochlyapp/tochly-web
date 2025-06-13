@@ -14,7 +14,7 @@ jest.mock('react-i18next', () => ({
   }),
 }));
 
-jest.mock('src/redux/services/authAPI', () => ({
+jest.mock('src/redux/services/auth', () => ({
   useActivateMutation: jest.fn(),
 }));
 

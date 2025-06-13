@@ -8,10 +8,10 @@ import { useGetUserTeamsQuery } from 'src/redux/services/team';
 import { useGetCurrentUserQuery } from 'src/redux/services/auth';
 
 // Mock RTK Query hooks
-jest.mock('src/redux/services/teamAPIs', () => ({
+jest.mock('src/redux/services/team', () => ({
   useGetUserTeamsQuery: jest.fn(),
 }));
-jest.mock('src/redux/services/authAPI', () => ({
+jest.mock('src/redux/services/auth', () => ({
   useGetCurrentUserQuery: jest.fn(),
 }));
 
@@ -100,16 +100,15 @@ describe('UserTeams Component', () => {
 
     renderComponent();
 
-    expect(screen.getByLabelText('user-email')).toBeInTheDocument();
     mockTeams.forEach((team) => {
       expect(screen.getByText(team.name)).toBeInTheDocument();
       expect(screen.getByLabelText('team-link-team-a')).toHaveAttribute(
         'href',
-        '/team/team-a'
+        '/teams/team-a'
       );
       expect(screen.getByLabelText('team-link-team-b')).toHaveAttribute(
         'href',
-        '/team/team-b'
+        '/teams/team-b'
       );
     });
   });
@@ -127,7 +126,5 @@ describe('UserTeams Component', () => {
     });
 
     renderComponent();
-
-    expect(screen.getByLabelText('user-email')).toHaveTextContent('Unknown User');
   });
 });

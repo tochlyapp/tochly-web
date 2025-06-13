@@ -15,7 +15,7 @@ jest.mock('react-i18next', () => ({
 }));
 
 // Mock auth API
-jest.mock('src/redux/services/authAPI', () => ({
+jest.mock('src/redux/services/auth', () => ({
   useResetPasswordMutation: jest.fn(),
 }));
 

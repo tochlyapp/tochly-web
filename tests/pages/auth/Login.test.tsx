@@ -23,7 +23,7 @@ jest.mock('src/redux/hooks', () => ({
 }));
 
 // Mock auth API
-jest.mock('src/redux/services/authAPI', () => ({
+jest.mock('src/redux/services/auth', () => ({
   useLoginMutation: jest.fn(),
 }));
 

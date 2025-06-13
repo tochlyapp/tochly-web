@@ -17,8 +17,12 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+
+import { useAcceptInvitationMutation } from 'src/redux/services/invitation';
 import { useLoginMutation } from 'src/redux/services/auth';
+
 import { setAuth } from 'src/redux/slices/auth';
+import { handleAcceptInvite } from 'src/lib/invitation';
 
 import { Header, SocialButtons } from 'src/pages/auth/components';
 import { FormInputGroup, SpinningButton } from 'src/components';
@@ -31,12 +35,13 @@ type FormInput = {
 const Login = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-
   const navigate = useNavigate();
   const location = useLocation();
   
   const { isAuthenticated } = useAppSelector((state) => state.auth);
+
   const [login, { isLoading }] = useLoginMutation();
+	const [acceptInvite] = useAcceptInvitationMutation();
 
   const from = (location.state as { from: Location })?.from?.pathname || '/';
 
@@ -54,6 +59,8 @@ const Login = () => {
 			.unwrap()
 			.then(() => {
 				dispatch(setAuth());
+				const inviteToken = localStorage.getItem('invitationToken');
+				if (inviteToken) handleAcceptInvite(acceptInvite, t, inviteToken);
 				toast.success(t('Logged in successfully'));
 				navigate(from, { replace: true });
 			})

@@ -19,7 +19,7 @@ const Authenticate: React.FC = () => {
     .finally(() => {
       dispatch(finishLoading());
     }).catch(() => {
-      navigate('/auth/login');
+      // navigate('/auth/login');
     }).finally (() => {
       dispatch(finishLoading());
     });

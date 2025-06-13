@@ -6,7 +6,7 @@ import configureStore from 'redux-mock-store';
 import LeftSidebarMenu from 'src/layouts/auth-layout/LeftSidebarMenu';
 import { changeLayoutMode, setActiveTab } from 'src/redux/slices/layout';
 
-jest.mock('src/redux/services/authAPI', () => ({
+jest.mock('src/redux/services/auth', () => ({
   useLogoutMutation: jest.fn(() => [jest.fn()]),
   usePatchCurrentUserProfileMutation: jest.fn(() => [jest.fn()]),
 }));
@@ -58,7 +58,7 @@ describe('LeftSidebarMenu Component', () => {
     unwrap: jest.fn().mockResolvedValueOnce('success'),
   }));
 
-  const { useLogoutMutation, usePatchCurrentUserProfileMutation } = require('src/redux/services/authAPI');
+  const { useLogoutMutation, usePatchCurrentUserProfileMutation } = require('src/redux/services/auth');
   useLogoutMutation.mockReturnValue([mockLogout]);
   usePatchCurrentUserProfileMutation.mockReturnValue([mockPatchProfile]);
 
@@ -78,7 +78,7 @@ describe('LeftSidebarMenu Component', () => {
     expect(screen.getByLabelText('profile')).toBeInTheDocument();
     expect(screen.getByLabelText('chat')).toBeInTheDocument();
     expect(screen.getByLabelText('group')).toBeInTheDocument();
-    expect(screen.getByLabelText('contacts')).toBeInTheDocument();
+    expect(screen.getByLabelText('members')).toBeInTheDocument();
     expect(screen.getByLabelText('settings')).toBeInTheDocument();
   });
 
