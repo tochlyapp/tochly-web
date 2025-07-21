@@ -4,11 +4,11 @@ import { TabContent, TabPane } from "reactstrap";
 import { useAppSelector } from 'src/redux/hooks';
 
 // Import Components
-import Profile from "./Tabs/Profile";
-import Chats from 'src/pages/chat/Tabs/chats';
-import Groups from "./Tabs/Groups";
-import Members from 'src/pages/chat/Tabs/members';
-import Settings from "./Tabs/Settings";
+import Profile from './tabs/Profile';
+import Chats from 'src/pages/chat/tabs/chats';
+import Groups from './tabs/Groups';
+import Members from 'src/pages/chat/tabs/members';
+import Settings from './tabs/Settings';
 
 
 const ChatLeftSidebar: React.FC = () => {
