@@ -6,9 +6,9 @@ import { useAppSelector } from 'src/redux/hooks';
 // Import Components
 import Profile from 'src/pages/chat/tabs/Profile';
 import Chats from 'src/pages/chat/tabs/chats';
-import Groups from './tabs/Groups';
+import Groups from 'src/pages/chat/tabs/Groups';
 import Members from 'src/pages/chat/tabs/members';
-import Settings from './tabs/Settings';
+import Settings from 'src/pages/chat/tabs/Settings';
 
 
 const ChatLeftSidebar: React.FC = () => {
