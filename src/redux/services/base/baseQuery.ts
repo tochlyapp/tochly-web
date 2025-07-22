@@ -10,22 +10,25 @@ import { setAuth, logout } from 'src/redux/slices/auth';
 
 const mutex = new Mutex();
 
-export const getBaseQuery = (baseQuery: any) => {
+export const getBaseQuery = (
+  baseQuery: any,
+  refreshUrl: string
+): BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> => {
   const baseQueryWithReauth: BaseQueryFn<
-  string | FetchArgs,
-  unknown,
-  FetchBaseQueryError
+    string | FetchArgs,
+    unknown,
+    FetchBaseQueryError
   > = async (args, api, extraOptions) => {
     await mutex.waitForUnlock();
     let result = await baseQuery(args, api, extraOptions);
 
     if (result.error && result.error.status === 401) {
-      if (!mutex.isLocked()) {
+      if (!mutex.isLocked() && refreshUrl) {
         const release = await mutex.acquire();
         try {
           const refreshResult = await baseQuery(
             {
-              url: '/jwt/refresh/',
+              url: refreshUrl,
               method: 'POST',
             },
             api,
@@ -51,4 +54,4 @@ export const getBaseQuery = (baseQuery: any) => {
   };
 
   return baseQueryWithReauth;
-}
+};

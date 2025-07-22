@@ -14,14 +14,14 @@ const chatBaseQuery = fetchBaseQuery({
 
 export const backendBaseAPI = createApi({
   reducerPath: 'backendApi',
-  baseQuery: getBaseQuery(backendBaseQuery),
+  baseQuery: getBaseQuery(backendBaseQuery, '/jwt/refresh/'),
   tagTypes: ['Team', 'Member'],
   endpoints: () => ({}),
 });
 
 export const chatBaseAPI = createApi({
   reducerPath: 'chatApi',
-  baseQuery: getBaseQuery(chatBaseQuery),
+  baseQuery: getBaseQuery(chatBaseQuery, ''),
   tagTypes: ['Chat', 'ChatRoom', 'ChatMessage'],
   endpoints: () => ({}),
 });
