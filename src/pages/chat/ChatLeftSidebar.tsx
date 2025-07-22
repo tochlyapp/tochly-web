@@ -4,7 +4,7 @@ import { TabContent, TabPane } from "reactstrap";
 import { useAppSelector } from 'src/redux/hooks';
 
 // Import Components
-import Profile from './tabs/Profile';
+import Profile from 'src/pages/chat/tabs/Profile';
 import Chats from 'src/pages/chat/tabs/chats';
 import Groups from './tabs/Groups';
 import Members from 'src/pages/chat/tabs/members';
