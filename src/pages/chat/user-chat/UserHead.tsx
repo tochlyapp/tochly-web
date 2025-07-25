@@ -27,15 +27,17 @@ const UserHead: React.FC = () => {
 		videoModal: false,
 	});
 
-	const { activeChatRoom } = useContext(ChatContext) as TChatContext;
+	const { activeChatRoom, currentMember } = useContext(ChatContext) as TChatContext;
 	const dispatch = useAppDispatch();
+
+	const isLoggedInUser = activeChatRoom?.participant_id == currentMember?.user.id
 
 	const toggleDropdown = (key: any) =>
 		setDropdownState((prev) => ({ ...prev, [key]: !(prev as any)[key] }));
 
 	const handleOpenUserSidebar = (e: any) => {
 		e.preventDefault();
-		dispatch(openUserSidebar());
+		!isLoggedInUser && dispatch(openUserSidebar());
 	};
 
 	const handleDeleteMessages = () => {
@@ -112,50 +114,54 @@ const UserHead: React.FC = () => {
 								</DropdownMenu>
 							</Dropdown>
 						</li>
-						<li className="list-inline-item d-none d-lg-inline-block me-2">
-							<button
-								type="button"
-								onClick={() => toggleDropdown("callModal")}
-								className="btn nav-btn"
-							>
-								<i className="ri-phone-line"></i>
-							</button>
-						</li>
-						<li className="list-inline-item d-none d-lg-inline-block me-2">
-							<button
-								type="button"
-								onClick={() => toggleDropdown("videoModal")}
-								className="btn nav-btn"
-							>
-								<i className="ri-vidicon-line"></i>
-							</button>
-						</li>
-						<li className="list-inline-item">
-							<Dropdown
-								isOpen={dropdownState.more}
-								toggle={() => toggleDropdown("more")}
-							>
-								<DropdownToggle color="none" className="btn nav-btn">
-									<i className="ri-more-fill"></i>
-								</DropdownToggle>
-								<DropdownMenu className="dropdown-menu-end">
-									<DropdownItem
-										onClick={handleOpenUserSidebar}
+						{!isLoggedInUser && (
+							<>
+								<li className="list-inline-item d-none d-lg-inline-block me-2">
+									<button
+										type="button"
+										onClick={() => toggleDropdown("callModal")}
+										className="btn nav-btn"
 									>
-										View Profile <i className="ri-user-2-line float-end text-muted"></i>
-									</DropdownItem>
-									<DropdownItem>
-										Archive <i className="ri-archive-line float-end text-muted"></i>
-									</DropdownItem>
-									<DropdownItem>
-										Muted <i className="ri-volume-mute-line float-end text-muted"></i>
-									</DropdownItem>
-									<DropdownItem onClick={handleDeleteMessages}>
-										Delete <i className="ri-delete-bin-line float-end text-muted"></i>
-									</DropdownItem>
-								</DropdownMenu>
-							</Dropdown>
-						</li>
+										<i className="ri-phone-line"></i>
+									</button>
+								</li>
+								<li className="list-inline-item d-none d-lg-inline-block me-2">
+									<button
+										type="button"
+										onClick={() => toggleDropdown("videoModal")}
+										className="btn nav-btn"
+									>
+										<i className="ri-vidicon-line"></i>
+									</button>
+								</li>
+								<li className="list-inline-item">
+									<Dropdown
+										isOpen={dropdownState.more}
+										toggle={() => toggleDropdown("more")}
+									>
+										<DropdownToggle color="none" className="btn nav-btn">
+											<i className="ri-more-fill"></i>
+										</DropdownToggle>
+										<DropdownMenu className="dropdown-menu-end">
+											<DropdownItem
+												onClick={handleOpenUserSidebar}
+											>
+												View Profile <i className="ri-user-2-line float-end text-muted"></i>
+											</DropdownItem>
+											<DropdownItem>
+												Archive <i className="ri-archive-line float-end text-muted"></i>
+											</DropdownItem>
+											<DropdownItem>
+												Muted <i className="ri-volume-mute-line float-end text-muted"></i>
+											</DropdownItem>
+											<DropdownItem onClick={handleDeleteMessages}>
+												Delete <i className="ri-delete-bin-line float-end text-muted"></i>
+											</DropdownItem>
+										</DropdownMenu>
+									</Dropdown>
+								</li>
+							</>
+						)}
 					</ul>
 				</Col>
 			</Row>

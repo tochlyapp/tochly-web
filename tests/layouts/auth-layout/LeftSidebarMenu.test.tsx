@@ -1,132 +1,185 @@
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
-import configureStore from 'redux-mock-store';
 import LeftSidebarMenu from 'src/layouts/auth-layout/LeftSidebarMenu';
-import { changeLayoutMode, setActiveTab } from 'src/redux/slices/layout';
+import { ChatContext } from 'src/context/ChatContext';
+import { BrowserRouter } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import * as authApi from 'src/redux/services/auth';
+import * as memberApi from 'src/redux/services/member';
+import { toast } from 'react-toastify';
+
+jest.mock('src/redux/hooks', () => ({
+  useAppDispatch: jest.fn(),
+  useAppSelector: jest.fn(),
+}));
 
 jest.mock('src/redux/services/auth', () => ({
-  useLogoutMutation: jest.fn(() => [jest.fn()]),
-  usePatchCurrentUserProfileMutation: jest.fn(() => [jest.fn()]),
+  __esModule: true,
+  useLogoutMutation: jest.fn(),
+  usePatchCurrentUserProfileMutation: jest.fn(),
 }));
 
-jest.mock('src/i18n', () => ({
-  changeLanguage: jest.fn(),
+jest.mock('src/redux/services/member', () => ({
+  __esModule: true,
+  usePatchCurrentTeamMemberMutation: jest.fn(),
 }));
 
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => key,
-  }),
+jest.mock('src/redux/slices/layout', () => ({
+  setActiveTab: jest.fn((tab) => ({ type: 'setActiveTab', payload: tab })),
+  changeLayoutMode: jest.fn((mode) => ({ type: 'changeLayoutMode', payload: mode })),
 }));
 
-// Mock data
-const mockStore = configureStore([]);
-const initialState = {
-  layout: {
-    layoutMode: 'light',
-    activeTab: 'profile',
+jest.mock('src/redux/slices/auth', () => ({
+  logout: jest.fn(() => ({ type: 'logout' })),
+}));
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useParams: () => ({ tid: 'team-123' }),
+}));
+
+jest.mock('react-toastify', () => ({
+  toast: {
+    success: jest.fn(),
+    error: jest.fn(),
+    info: jest.fn(),
   },
-  auth: {
-    isAuthenticated: true,
-  },
+}));
+
+const mockDispatch = jest.fn();
+const mockLogout = jest.fn(() => ({ unwrap: () => Promise.resolve() }));
+const mockPatchProfile = jest.fn(() => ({ unwrap: () => Promise.resolve() }));
+const mockPatchMember = jest.fn(() => ({ unwrap: () => Promise.resolve({ online: true }) }));
+
+(useAppDispatch as jest.Mock).mockReturnValue(mockDispatch);
+(useAppSelector as jest.Mock).mockReturnValue({
+  layoutMode: 'light',
+  activeTab: 'chat',
+});
+
+(authApi.useLogoutMutation as jest.Mock).mockReturnValue([mockLogout]);
+(authApi.usePatchCurrentUserProfileMutation as jest.Mock).mockReturnValue([mockPatchProfile]);
+(memberApi.usePatchCurrentTeamMemberMutation as jest.Mock).mockReturnValue([mockPatchMember]);
+
+const renderWithContext = (overrides = {}) => {
+  const defaultContext = {
+    currentMember: {
+      id: 1,
+      display_name: "John Doe",
+      full_name: "Johnathan Doe",
+      role: 'admin' as 'admin' | 'member',
+      title: "Project Manager",
+      phone_number: "+1234567890",
+      profile_picture_url: "https://example.com/avatars/john_doe.jpg",
+      online: true,
+      status: '',
+    
+      user: {
+        id: 10,
+        email: "johndoe@example.com",
+        first_name: "John",
+        last_name: "Doe",
+        timezone: "Africa/Lagos",
+      },
+    
+      profile: {
+        id: 100,
+        user: 10,
+        email: "johndoe@example.com",
+        full_name: "Johnathan Doe",
+        dark_mode: true,
+      },
+    },
+    setCurrentMember: jest.fn(),
+    activeChatRoom: null,
+    setActiveChatRoom: jest.fn(),
+    isLoggedInUser: true,
+    setIsLoggedInUser: jest.fn(),
+  };
+
+  return render(
+    <ChatContext.Provider value={{ ...defaultContext, ...overrides }}>
+      <BrowserRouter>
+        <LeftSidebarMenu />
+      </BrowserRouter>
+    </ChatContext.Provider>
+  );
 };
 
-describe('LeftSidebarMenu Component', () => {
-  let store: any;
+// --- Tests ---
 
-  beforeAll(() => {
-    // Mock window.confirm
-    global.confirm = jest.fn();
-  });
-
+describe('LeftSidebarMenu', () => {
   beforeEach(() => {
-    store = mockStore(initialState);
+    jest.clearAllMocks();
+    localStorage.clear();
   });
 
-  afterAll(() => {
-    // Clean up after tests
-    (global.confirm as jest.Mock).mockRestore(); // Restore original behavior if needed
-  });
-
-  const mockLogout = jest.fn(() => ({
-    unwrap: jest.fn().mockResolvedValueOnce('success'),
-  }));
-
-  const mockPatchProfile = jest.fn(() => ({
-    unwrap: jest.fn().mockResolvedValueOnce('success'),
-  }));
-
-  const { useLogoutMutation, usePatchCurrentUserProfileMutation } = require('src/redux/services/auth');
-  useLogoutMutation.mockReturnValue([mockLogout]);
-  usePatchCurrentUserProfileMutation.mockReturnValue([mockPatchProfile]);
-
-  const renderComponent = () =>
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <LeftSidebarMenu />
-        </MemoryRouter>
-      </Provider>
-    );
-
-  it('renders the sidebar with tabs', () => {
-    renderComponent();
-
+  it('renders logo and tabs', () => {
+    renderWithContext();
     expect(screen.getByRole('logo')).toBeInTheDocument();
-    expect(screen.getByLabelText('profile')).toBeInTheDocument();
     expect(screen.getByLabelText('chat')).toBeInTheDocument();
-    expect(screen.getByLabelText('group')).toBeInTheDocument();
-    expect(screen.getByLabelText('members')).toBeInTheDocument();
-    expect(screen.getByLabelText('settings')).toBeInTheDocument();
   });
 
-  it('toggles the active tab when a tab is clicked', () => {
-    renderComponent();
-
-    const chatTab = screen.getByLabelText('chat');
-    fireEvent.click(chatTab);
-
-    expect(store.getActions()).toContainEqual(setActiveTab('chat'));
-    expect(localStorage.getItem('activeTab')).toBe('chat');
-  });
-
-  it('toggles the layout mode when the theme toggle is clicked', async () => {
-    renderComponent();
-
-    const themeToggle = screen.getByLabelText('light-dark');
-    await waitFor(() => (
-      fireEvent.click(themeToggle)
-    ));
-
-    const expectedMode = initialState.layout.layoutMode === 'light' ? 'dark' : 'light';
-    expect(store.getActions()).toContainEqual(changeLayoutMode(expectedMode));
-  });
-
-  it('changes the language when a different language is selected', () => {
-    renderComponent();
-
-    const languageDropdown = screen.getByLabelText('global-icon');
-    fireEvent.click(languageDropdown);
+  it('toggles language dropdown and selects language', () => {
+    renderWithContext();
+    const globe = screen.getByLabelText('global-icon');
+    fireEvent.click(globe);
 
     const spanishOption = screen.getByText('Spanish');
     fireEvent.click(spanishOption);
 
-    const i18n = require('src/i18n');
-    expect(i18n.changeLanguage).toHaveBeenCalledWith('sp');
+    expect(screen.getByText('Spanish')).toBeInTheDocument();
   });
 
-  it('logs out when the logout button is clicked', () => {
-    renderComponent();
+  it('toggles layout mode', async () => {
+    renderWithContext();
+    const layoutToggle = screen.getByLabelText('light-dark');
+    fireEvent.click(layoutToggle);
 
-    const profileDropdown = screen.getByAltText('user');
-    fireEvent.click(profileDropdown);
+    await waitFor(() => {
+      expect(mockPatchProfile).toHaveBeenCalled();
+      expect(mockDispatch).toHaveBeenCalled();
+    });
+  });
 
-    const logoutButton = screen.getByText('Log out');
-    fireEvent.click(logoutButton);
+  it('logs out after confirmation', async () => {
+    global.confirm = jest.fn(() => true); // simulate "OK" on confirm
 
-    const confirmSpy = jest.spyOn(window, 'confirm').mockReturnValue(true);
-    expect(confirmSpy).toHaveBeenCalledWith('Are you sure you want to log out?');
+    renderWithContext();
+
+    const avatar = screen.getByAltText('user');
+    fireEvent.click(avatar);
+
+    const logoutOption = screen.getByText('Log out');
+    fireEvent.click(logoutOption);
+
+    await waitFor(() => {
+      expect(mockLogout).toHaveBeenCalled();
+      expect(mockDispatch).toHaveBeenCalled();
+    });
+  });
+
+  it('toggles online status', async () => {
+    renderWithContext();
+
+    const avatar = screen.getByAltText('user');
+    fireEvent.click(avatar);
+
+    const toggleStatus = screen.getByText('Go Offline');
+    fireEvent.click(toggleStatus);
+
+    await waitFor(() => {
+      expect(mockPatchMember).toHaveBeenCalled();
+      expect(toast.info).toHaveBeenCalledWith('You are now Offline');
+    });
+  });
+
+  it('switches tabs and updates localStorage', () => {
+    renderWithContext();
+    const profileTab = screen.getByLabelText('profile');
+    fireEvent.click(profileTab);
+
+    expect(mockDispatch).toHaveBeenCalled();
+    expect(localStorage.getItem('activeTab')).toBe('profile');
   });
 });

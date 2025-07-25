@@ -56,6 +56,7 @@ const Register = () => {
         email: data.email,
         password: data.password,
         re_password: data.rePassword,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       })
       .unwrap()
       .then(() => {

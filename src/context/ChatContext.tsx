@@ -11,7 +11,8 @@ type ChatContextProps = {
 
 export const ChatProvider = ({ children }: ChatContextProps) => {
   const [activeChatRoom, setActiveChatRoom] = useState<ChatRoom | null>(null);
-	const [currentMember, setCurrentMember] = useState<TeamMember | null>(null)
+	const [currentMember, setCurrentMember] = useState<TeamMember | null>(null);
+  const [isLoggedInUser, setIsLoggedInUser] = useState(false);
 
   const contextValue = useMemo(
     () => ({
@@ -19,6 +20,8 @@ export const ChatProvider = ({ children }: ChatContextProps) => {
 			setActiveChatRoom,
 			currentMember,
 			setCurrentMember,
+      isLoggedInUser,
+      setIsLoggedInUser
     }),
     [activeChatRoom, currentMember],
   );

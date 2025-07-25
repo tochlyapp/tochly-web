@@ -22,6 +22,7 @@ const memberAPI = backendBaseAPI.injectEndpoints({
         if (userId) params.set('user_id', userId);
         return `/teams/${tid}/members/?${params.toString()}`
       },
+      providesTags: ['Member']
     }),
     createTeamMember: builder.mutation<TeamMember, TeamMemberCreate>({
       query: ({ user, teamTid, display_name, role }) => ({
@@ -31,6 +32,14 @@ const memberAPI = backendBaseAPI.injectEndpoints({
       }),
       invalidatesTags: ['Team']
     }),
+    patchCurrentTeamMember: builder.mutation({
+      query: ({teamTid, id, data}) => ({
+        url: `/teams/${teamTid}/members/${id}/`,
+        method: 'PATCH',
+        body: data,
+      }),
+      invalidatesTags: ['Member']
+    }),
   }),
 });
 
@@ -38,4 +47,5 @@ export const {
   useGetTeamMembersQuery,
   useLazyGetTeamMembersQuery,
   useCreateTeamMemberMutation,
+  usePatchCurrentTeamMemberMutation,
 } = memberAPI;

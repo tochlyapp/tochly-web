@@ -18,6 +18,7 @@ import { ChatContext } from 'src/context/ChatContext';
 import { ChatRoom, ChatContext as TChatContext } from 'src/types';
 
 import TeamMembers from 'src/pages/chat/tabs/chats/TeamMembers';
+import { closeUserSidebar } from 'src/redux/slices/layout';
 
 const Chats = () => {
   const [search, setSearch] = useState('');
@@ -58,6 +59,7 @@ const Chats = () => {
     e.preventDefault();
     setActiveChatRoom(room);
     localStorage.setItem('lastActiveRoom', JSON.stringify(room));
+    dispatch(closeUserSidebar());
   };
 
   useEffect(() => {

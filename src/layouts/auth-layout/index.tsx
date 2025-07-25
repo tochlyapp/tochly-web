@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import { useAppDispatch } from 'src/redux/hooks';
 import { changeLayoutMode } from 'src/redux/slices/layout';
-
+import { ChatProvider } from 'src/context';
 import LeftSidebarMenu from 'src/layouts/auth-layout/LeftSidebarMenu';
 
 type AuthProps = {
@@ -21,10 +21,12 @@ const AuthLayout: React.FC<AuthProps> = ({ children }) => {
 
   return (
     <div className="layout-wrapper d-lg-flex">
-      {/* Left Sidebar Menu */}
-      <LeftSidebarMenu />
-      {/* Render Page Content */}
-      {children}
+      <ChatProvider>
+        {/* Left Sidebar Menu */}
+        <LeftSidebarMenu />
+        {/* Render Page Content */}
+        {children}
+      </ChatProvider>
     </div>
   );
 };

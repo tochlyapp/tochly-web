@@ -98,6 +98,7 @@ describe('Register Component', () => {
         email: 'john.doe@example.com',
         password: 'password123',
         re_password: 'password123',
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       });
       expect(screen.getByText('Registered successfully! Check your email and verify your account')).toBeInTheDocument();
     });

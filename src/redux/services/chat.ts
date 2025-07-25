@@ -16,7 +16,7 @@ type ChatMessageParams = {
 export const chatAPIs = chatBaseAPI.injectEndpoints({
   endpoints: (builder) => ({
     getChatRooms: builder.query<ChatRoom[],  ChatRoomParams>({
-      query: ({ tid, userId, search }) => `/chats/rooms?team_id=${tid}&user_id=${userId}&search=${search}`,
+      query: ({ tid, userId, search='' }) => `/chats/rooms?team_id=${tid}&user_id=${userId}&search=${search}`,
       providesTags: ['ChatRoom']
     }),
     getRoomChatMessages: builder.query<ChatRoom[],  ChatMessageParams>({

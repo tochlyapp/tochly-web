@@ -19,4 +19,6 @@ export type ChatContext = {
   setActiveChatRoom: (room: ChatRoom) => void;
 	currentMember: TeamMember | null;
 	setCurrentMember: (member: TeamMember) => void;
+	isLoggedInUser: boolean;
+	setIsLoggedInUser: (isLoggedInUser: boolean) => void;
 }

@@ -1,14 +1,24 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Nav, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import classnames from 'classnames';
 
-import { useLogoutMutation, usePatchCurrentUserProfileMutation } from 'src/redux/services/auth';
+import { 
+  useLogoutMutation, 
+  usePatchCurrentUserProfileMutation 
+} from 'src/redux/services/auth';
 import { logout as logoutState } from 'src/redux/slices/auth';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { setActiveTab, changeLayoutMode } from 'src/redux/slices/layout';
+
+import { usePatchCurrentTeamMemberMutation } from 'src/redux/services/member';
+import { chatBaseAPI } from 'src/redux/services/base/baseAPI';
+
+import { ChatContext } from 'src/context/ChatContext';
+import { ChatContext as TChatContext } from 'src/types';
 
 import logo from 'src/assets/images/logo.svg';
 import avatar1 from 'src/assets/images/users/avatar-1.jpg';
@@ -31,12 +41,17 @@ type DropdownsType = {
 
 const LeftSidebarMenu: React.FC = () => {
   const { t } = useTranslation();
+  const { tid } = useParams<{ tid: string }>();
   const dispatch = useAppDispatch();
+
+  const { layoutMode, activeTab } = useAppSelector((state) => state.layout);
+  const { currentMember, setCurrentMember } = useContext(ChatContext) as TChatContext;
+
+  const isOnline = currentMember?.online || false;
 
   const [logout] = useLogoutMutation();
   const [patchCurrentUserProfile] = usePatchCurrentUserProfileMutation();
-
-  const { layoutMode, activeTab } = useAppSelector((state) => state.layout);
+  const [patchCurrentTeamMember] = usePatchCurrentTeamMemberMutation();
 
   const [dropdowns, setDropdowns] = useState<DropdownsType>({
     general: false,
@@ -63,7 +78,7 @@ const LeftSidebarMenu: React.FC = () => {
     setDropdowns((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
-  const onChangeLayoutMode = useCallback(
+  const toggleLayoutMode = useCallback(
     (value: 'light' | 'dark') => {
       patchCurrentUserProfile({ dark_mode: value === 'dark' })
         .unwrap()
@@ -77,6 +92,19 @@ const LeftSidebarMenu: React.FC = () => {
     },
     [dispatch, patchCurrentUserProfile, t]
   );
+
+  const toggleOnlineStatus = () => {
+    patchCurrentTeamMember({ teamTid: tid, id: currentMember!.id, data: {online: !isOnline}})
+    .unwrap()
+    .then(async (resp) => {
+      setCurrentMember(resp);
+      dispatch(chatBaseAPI.util.invalidateTags(['ChatRoom']));
+      toast.info(`You are now ${!isOnline ? 'Online' : 'Offline'}`);
+    })
+    .catch(() => {
+      toast.error(t('An unexpected error occurred. Please try again.'));
+    });
+  };
 
   const toggleTab = useCallback(
     (tab: string) => {
@@ -133,7 +161,7 @@ const LeftSidebarMenu: React.FC = () => {
       {/* Side Menu */}
       <div className="flex-lg-column my-auto">
         <Nav className="side-menu-nav nav-pills justify-content-center" role="tablist">
-          {['profile', 'chat', 'group', 'members', 'settings'].map((tab: string) => (
+          {['profile', 'chat', 'group', 'members'].map((tab: string) => (
             <NavItemWithTooltip
               id={tab}
               key={tab}
@@ -178,7 +206,7 @@ const LeftSidebarMenu: React.FC = () => {
             iconClassName="ri-sun-line theme-mode-icon"
             NavLinkClassName="mb-2"
             tooltip="Dark / Light Mode"
-            onClick={() => onChangeLayoutMode(mode)}
+            onClick={() => toggleLayoutMode(mode)}
             aria-label="light-dark"
           />
 
@@ -195,9 +223,17 @@ const LeftSidebarMenu: React.FC = () => {
               <DropdownItem onClick={() => toggleTab('profile')}>
                 Profile <i className="ri-profile-line float-end text-muted"></i>
               </DropdownItem>
-              <DropdownItem onClick={() => toggleTab('settings')}>
-                Setting <i className="ri-settings-3-line float-end text-muted"></i>
+              <DropdownItem onClick={toggleOnlineStatus}>
+                {isOnline ? 'Go Offline' : 'Go Online'}
+                <i
+                  className={`float-end text-muted ${
+                    isOnline ? 'ri-wifi-line text-success' : 'ri-wifi-off-line text-danger'
+                  }`}
+                ></i>
               </DropdownItem>
+              {/* <DropdownItem onClick={() => toggleTab('settings')}>
+                Setting <i className="ri-settings-3-line float-end text-muted"></i>
+              </DropdownItem> */}
               <DropdownItem divider />
               <DropdownItem onClick={handleLogout}>
                 Log out <i className="ri-logout-circle-r-line float-end text-muted"></i>

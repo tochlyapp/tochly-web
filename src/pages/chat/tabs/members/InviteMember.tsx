@@ -75,7 +75,13 @@ const InviteMember: React.FC = () => {
 				return
 			}
 			const url = `${process.env.REACT_APP_REDIRECT_URL}/invitations/accept-invite` 
-			sendInvitation({ tid: tid as string, inviteeEmail: data.email, invitedBy: currentMember!.user.id, role: data.role, url })
+			sendInvitation({
+				tid: tid as string, 
+				inviteeEmail: data.email, 
+				invitedBy: currentMember!.user.id,
+				role: data.role, 
+				url 
+			})
 			.unwrap()
 			.then((resp) => {
 				toast.success(resp.detail);

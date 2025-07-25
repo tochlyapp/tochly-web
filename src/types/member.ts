@@ -2,9 +2,10 @@ import { User } from 'src/types/user';
 
 export type TeamMemberBase = {
   display_name: string;
-  role?: 'member' | 'admin';
+  role: 'member' | 'admin';
   title?: string;
   phone_number?: string;
+  profile_picture_url?: string;
   online?: boolean;
   status?: string;
 }
@@ -13,7 +14,7 @@ export type TeamMember = TeamMemberBase & {
   id: number;
   user: User;
   full_name: string;
-  profile?: Profile;
+  profile: Profile;
 }
 
 export type ProfileBase = {
