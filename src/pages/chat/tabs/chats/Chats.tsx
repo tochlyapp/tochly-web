@@ -76,7 +76,7 @@ const Chats = () => {
 		if (!chatRooms) return;
 	
 		const lastActiveRoomStr = localStorage.getItem('lastActiveRoom');
-		const lastActiveRoom = lastActiveRoomStr ? JSON.parse(lastActiveRoomStr) : null;
+		const lastActiveRoom = (lastActiveRoomStr && lastActiveRoomStr != 'undefined') ? JSON.parse(lastActiveRoomStr) : null;
 	
 		const matchedRoom = chatRooms.find(
 			(room) => room.room_id === lastActiveRoom?.room_id
